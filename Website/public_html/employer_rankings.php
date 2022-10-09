@@ -59,12 +59,15 @@
             ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
             recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
             FROM reviewedEmployer_S
-            WHERE company_name LIKE '%$filter_params'";
+            WHERE company_name LIKE '%$filter_params%'
+            ORDER BY overall_rating DESC";
+
         } else {
             $query = "SELECT company_name, reviews_count, business_outlook_rating, career_opportunities_rating,
             ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
             recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
-            FROM reviewedEmployer_S";
+            FROM reviewedEmployer_S
+            ORDER BY overall_rating DESC";
         }
         try {
             $res = $open_review_s_db->query($query);
