@@ -20,8 +20,10 @@
 <p>Overview Page - Add search bar to browse employers</p>
 <div>
     <form action="" method="GET">
-        <input type="text" name="search" placeholder="Company"
-               value="<?php if(isset($_GET['search'])){ echo $_GET['search']; } ?>" >
+        <label>
+            <input type="search" name="search" placeholder="Company"
+                   value="<?php if(isset($_GET['search'])){ echo $_GET['search']; } ?>" >
+        </label>
         <button type="submit"> Search </button>
     </form>
 </div>
