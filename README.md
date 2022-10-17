@@ -27,16 +27,16 @@ git checkout <branch_name>
 -- Create new branch
 git checkout -b <branch_name>
 
--- Switch branch
-git switch master
+1. -- Switch branch
+git switch <branch_name>
 
--- Check git status
+2. -- Check git status
 git status
 
--- Add file to be commited
+3. -- Add file to be commited
 git add <file_name>
 
--- Commit with message
+4. -- Commit with message
 git commit -m "<your_message>"
 
-git push
+5. git push
