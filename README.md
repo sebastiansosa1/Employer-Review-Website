@@ -16,3 +16,14 @@ For the advanced features you may choose to implement some or all of the followi
 3. Implementing page(s) with overall time trends for the listed employers. This task will require some clever SQL queries to generate data (based on reviews for a given employer) to display temporal trends in charts/graphs. Again, you may want to explore how these features are implemented on Glassdoor.com.
 
 You solution must be accompanied by a four-to-five page documentation/report presenting/describing the details of your solution. This documentation is essential to guide those who will be marking your solution — please include the information to help the marker gain a clear understanding of your project solution.
+
+
+
+git remote checkout
+
+git checkout <branch_name>
+
+git switch master
+git checkout <branch_name>
+
+git status
