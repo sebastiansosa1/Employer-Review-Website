@@ -18,12 +18,25 @@ For the advanced features you may choose to implement some or all of the followi
 You solution must be accompanied by a four-to-five page documentation/report presenting/describing the details of your solution. This documentation is essential to guide those who will be marking your solution — please include the information to help the marker gain a clear understanding of your project solution.
 
 
-
+-- Update git state
 git remote checkout
 
+-- Check out new branch
 git checkout <branch_name>
 
-git switch master
-git checkout <branch_name>
+-- Create new branch
+git checkout -b <branch_name>
 
+1. -- Switch branch
+git switch <branch_name>
+
+2. -- Check git status
 git status
+
+3. -- Add file to be commited
+git add <file_name>
+
+4. -- Commit with message
+git commit -m "<your_message>"
+
+5. git push
