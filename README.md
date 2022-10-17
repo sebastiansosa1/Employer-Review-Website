@@ -40,3 +40,5 @@ git add <file_name>
 git commit -m "<your_message>"
 
 5. git push
+
+6. git pull
