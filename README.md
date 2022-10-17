@@ -35,3 +35,8 @@ git status
 
 -- Add file to be commited
 git add <file_name>
+
+-- Commit with message
+git commit -m "<your_message>"
+
+git push
