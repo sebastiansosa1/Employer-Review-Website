@@ -14,7 +14,7 @@
     </ul>
 </nav>
 <!--TODO: Please add style to this boring form-->
-<!--TODO: I'm about to finish the implementation for this page. To add a new review in the DB-->
+<!--TODO: I'm about to finish the implementation for this page. ( To add a new review in the DB )-->
 <h1>Rate an employer</h1>
 <form action="" method="GET">
     <label>
@@ -24,6 +24,7 @@
     </label>
     <button type="submit"> Search </button>
 </form>
+<!-- SEARCH BAR IMPLEMENTATION -->
 <?php
     try {
     //    $open_review_s_db = new PDO("sqlite:open_review_s_sqlite.db");
@@ -51,127 +52,105 @@
 ?>
 
 <form action="" method="POST">
-    <label>
-        <br>Employer ID: (TEMP)<br>
-        <input type="number" name="employerId" placeholder="Employer ID" required
-               value="<?php if(isset($_POST['job_title'])){ echo $_POST['job_title']; } ?>" >
-    </label>
+    <label for="employerId"><br>Employer ID: (TEMP)</label>
+        <input type="number" name="employerId" placeholder="Employer ID" id="employerId" required
+               value="<?php if(isset($_POST['employerId'])){ echo $_POST['employerId']; } ?>" />
 
-    <label>
-        <br>Job Title:<br>
-        <input type="text" name="jobTitle" placeholder="Job Title"
-               value="<?php if(isset($_POST['job_title'])){ echo $_POST['job_title']; } ?>" >
-    </label>
 
-    <label>
-        <br>Employed From:<br>
-        <input type="date" name="employed_from" placeholder="Select Date" required
-               value="<?php if(isset($_POST['employed_from'])){ echo $_POST['employed_from']; } ?>" >
-    </label>
+    <label for="jobTitle"><br>Job Title: </label>
+        <input type="text" name="jobTitle" placeholder="Job Title" id="jobTitle"
+               value="<?php if(isset($_POST['jobTitle'])){ echo $_POST['jobTitle']; } ?>" />
 
-    <label>
-        <br>Employed To:<br>
-        <input type="date" name="employed_to" placeholder="Select Date" required
-               value="<?php if(isset($_POST['employed_to'])){ echo $_POST['employed_to']; } ?>" >
-    </label>
 
-    <label>
-        <br>Still employed?:<br>
-        <select id="" name="isCurrentJob" required>
+    <label for="employedFrom"><br>Employed From:</label>
+        <input type="date" name="employed_from" placeholder="Select Date" id="employedFrom" required
+               value="<?php if(isset($_POST['employed_from'])){ echo $_POST['employed_from']; } ?>" />
+
+
+    <label for="employedTo"><br>Employed To:</label>
+        <input type="date" name="employed_to" placeholder="Select Date" id="employedTo" required
+               value="<?php if(isset($_POST['employed_to'])){ echo $_POST['employed_to']; } ?>" />
+
+
+    <label for="isCurrentJob"><br>Still employed?:</label>
+        <select id="isCurrentJob" name="isCurrentJob" required>
             <option value="">--</option>
             <option value="1">YES</option>
             <option value="0">NO</option>
         </select>
-    </label>
 
-    <label>
-        <br>CEO:<br>
-        <select id="ratingCeo" name="CEO" required>
+
+    <label for="ratingCeo"><br>CEO:</label>
+        <select id="ratingCeo" name="ratingCeo" required>
             <option value="APPROVE">Approved</option>
             <option value="DISAPPROVE">Not Approved</option>
             <option value="NO_OPINION">No Opinion</option>
         </select>
-    </label>
 
-    <label>
-        <br>Compensation & Benefits<br>
-        <input list="rate" name="ratingCompensationAndBenefits" id=""
-            placeholder="Rate" required>
-    </label>
+    <label for="ratingCompensationAndBenefits"><br>Compensation & Benefits</label>
+        <input list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"
+            placeholder="Rate" required/>
 
-    <label>
-        <br>Career Opportunities<br>
-        <input list="rate" name="ratingCareerOpportunities" id=""
-               placeholder="Rate" required>
-    </label>
+    <label for="ratingCareerOpportunities"><br>Career Opportunities</label>
+        <input list="rate" name="ratingCareerOpportunities" id="ratingCareerOpportunities"
+               placeholder="Rate" required/>
 
-    <label>
-        <br>Business Outlook<br>
-        <input list="rate" name="ratingBusinessOutlook" id=""
-               placeholder="Rate">
-    </label>
+    <label for="ratingBusinessOutlook"><br>Business Outlook</label>
+        <input list="rate" name="ratingBusinessOutlook" id="ratingBusinessOutlook"
+               placeholder="Rate"/>
 
-    <label>
-        <br>Culture And Values<br>
-        <input list="rate" name="ratingCultureAndValues" id=""
-               placeholder="Rate" required>
-    </label>
+    <label for="ratingCultureAndValues"><br>Culture And Values</label>
+        <input list="rate" name="ratingCultureAndValues" id="ratingCultureAndValues"
+               placeholder="Rate" required/>
 
-    <label>
-        <br>Diversity & Inclusion<br>
-        <input list="rate" name="ratingDiversityAndInclusion" id=""
-               placeholder="Rate" required pattern="[0-5]{1}">
-    </label>
-    <label>
-        <br>Senior Leadership<br>
-    <input list="rate" name="ratingSeniorLeadership" id=""
+
+    <label for="ratingDiversityAndInclusion"><br>Diversity & Inclusion<label>
+        <input list="rate" name="ratingDiversityAndInclusion" id="ratingDiversityAndInclusion"
+               placeholder="Rate" required pattern="[0-5]{1}"/>
+
+
+    <label for="ratingSeniorLeadership"><br>Senior Leadership</label>
+    <input list="rate" name="ratingSeniorLeadership" id="ratingSeniorLeadership"
+           placeholder="Rate" required/>
+
+
+    <label for="ratingWorkLifeBalance"><br>Work-Life Balance</label>
+    <input list="rate" name="ratingWorkLifeBalance" id="ratingWorkLifeBalance"
+           placeholder="Rate" required/>
+
+
+    <label for="ratingOverall"><br>Overall Rating</label>
+    <input list="rate" name="ratingOverall" id="ratingOverall"
            placeholder="Rate" required>
-    </label>
 
-    <label>
-        <br>Work-Life Balance<br>
-    <input list="rate" name="ratingWorkLifeBalance" id=""
-           placeholder="Rate" required>
-    </label>
 
-    <label>
-        <br>Overall Rating<br>
-    <input list="rate" name="ratingOverall" id=""
-           placeholder="Rate" required>
-    </label>
-
-    <label>
-        <br>Recommend to a friend?<br>
-    <select id="" name="ratingRecommendedToFriend">
+    <label for="ratingRecommendedToFriend"><br>Recommend to a friend?</label>
+    <select id="ratingRecommendedToFriend" name="ratingRecommendedToFriend">
         <option value="<null>">--</option>
         <option value="POSITIVE">Yes</option>
         <option value="NEGATIVE">No</option>
     </select>
-    </label>
 
-    <label>
-        <br>Advice:<br>
+
+    <label for="advice"><br>Advice:<br></label>
     <textarea id="advice" name="advice" rows="4" cols="50" required placeholder="Write your advice here...">
     </textarea>
-    </label>
 
-    <label>
-        <br>Pros:<br>
+
+    <label for="pros"><br>Pros:<br></label>
     <textarea id="pros" name="pros" rows="4" cols="50" required placeholder="Pros of working at this company...">
     </textarea>
-    </label>
 
-    <label>
-        <br>Cons:<br>
+
+    <label for="cons"><br>Cons:<br></label>
     <textarea id="cons" name="cons" rows="4" cols="50" required placeholder="Cons of working at this company...">
     </textarea>
-    </label>
 
-    <label>
-        <br>Summary:<br>
+
+    <label for="summary"><br>Summary:<br></label>
     <textarea id="summary" name="summary" rows="4" cols="50" required placeholder="To sum up, my opinion is...">
     </textarea>
-    </label>
+
 
     <datalist id="rate">
         <option value="0">
@@ -189,15 +168,20 @@
 
 <?php
 
+try {
+    $res = $open_review_s_db->query("INSERT INTO employerReview_S (employerId, reviewDateTime, advice, cons, 
+                              employmentStatus, isCurrentJob, jobEndingYear, jobTitle, lengthOfEmployment, pros, ratingBusinessOutlook,
+                              ratingCareerOpportunities, ratingCeo, ratingCompensationAndBenefits, ratingCultureAndValues,
+                              ratingDiversityAndInclusion, ratingOverall, ratingRecommendToFriend, ratingSeniorLeadership,
+                              ratingWorkLifeBalance, summary) values (?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,?,
+                                                                      ?, ?, ?, ?, ?, ? ,? ,? ,? , ?)");
+    while($row = $res->fetch(PDO::FETCH_ASSOC)) {
+        echo $row['company_name'] . " | " . $row['overall_rating'] . "\n";
+    }
+} catch (PDOException $e) {
+    die($e->getMessage());
+}
 
-//try {
-//    $res = $open_review_s_db->query("SELECT company_name, overall_rating FROM reviewedEmployer_S ORDER BY overall_rating DESC;");
-//    while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-//        echo $row['company_name'] . " | " . $row['overall_rating'] . "\n";
-//    }
-//} catch (PDOException $e) {
-//    die($e->getMessage());
-//}
 ?>
 </body>
 </html>
