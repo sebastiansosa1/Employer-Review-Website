@@ -13,10 +13,12 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="employer_rankings.php">Employer Rankings</a></li>
         <li><a href="review_employer.php">Review an Employer</a></li>
-        <li>Sign In / Register</li>
     </ul>
 </nav>
 <h1>Employer Ratings</h1>
+<!--    TODO: Add style to this page, just like: https://nz.indeed.com/companies?from=gnav-homepage-->
+<!--    TODO: I might need to add the implementation for the selected company, just like the sketch we made-->
+<h2>(This is the overview page - :D )</h2>
 
 <p>Overview Page - Add search bar to browse employers</p>
 <div>

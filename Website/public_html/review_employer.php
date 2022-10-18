@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FakeName.com - Review</title>
+    <title>FakeName.com - Review Employer</title>
 </head>
 <body>
 <nav>
@@ -11,9 +11,10 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="employer_rankings.php">Employer Rankings</a></li>
         <li><a href="review_employer.php">Review an Employer</a></li>
-        <li>SignIn / Register</li>
     </ul>
 </nav>
+<!--TODO: Please add style to this boring form-->
+<!--TODO: I'm about to finish the implementation for this page. To add a new review in the DB-->
 <h1>Rate an employer</h1>
 <form action="" method="GET">
     <label>
