@@ -20,45 +20,48 @@ require_once 'database.php';
 <!--TODO: I'm about to finish the implementation for this page. ( To add a new review in the DB )-->
 <h1>Rate an employer</h1>
 <form action="" method="GET">
-    <label>
-        <br>Select a company to review:<br>
-        <input type="search" name="select_company" placeholder="Company Name"
+    <label for="select_company"></label>
+        <br>Search a company to review:<br>
+        <input type="search" name="select_company" placeholder="Company Name" id="select_company"
                value="<?php if(isset($_GET['select_company'])){ echo $_GET['select_company']; } ?>" >
-    </label>
     <button type="submit"> Search </button>
-</form>
-<!-- SEARCH BAR IMPLEMENTATION -->
-<?php
-//    try {
-//    //    $open_review_s_db = new PDO("sqlite:open_review_s_sqlite.db");
-//        $open_review_s_db = new PDO("sqlite:/Applications/AMPPS/www/Assignment1/open_review_s_sqlite.db");
-//        $open_review_s_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//    } catch (PDOException $e) {
-//        die($e->getMessage());
-//    }
-    $open_review_s_db = openConnection();
-    if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
-        $filter_params = $_GET['select_company'];
-        $query = "SELECT employer_id, company_name
+
+<!--    <label for="select_company" class="form-label">Company to Review:</label>-->
+<!--    <input class="form-control" list="companyOptions" id="select_company" placeholder="Type to search..."-->
+<!--    value="--><?php //if(isset($_GET['select_company'])){ echo $_GET['select_company']; } ?><!--">-->
+<!--    <button type="submit"> Search </button>-->
+
+
+    <datalist id='companyOptions'>
+        <?php
+        $open_review_s_db = openConnection();
+        if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
+            $filter_params = $_GET['select_company'];
+            $query = "SELECT employer_id, company_name
                 FROM employer
                 WHERE company_name LIKE '%$filter_params%'";
-        try {
-            $res = $open_review_s_db->query($query);
-            echo "<ul>";
-            while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-                echo "<li>" . $row['employer_id'] . ": " . $row['company_name'] . "</li>";
+            try {
+                $res = $open_review_s_db->query($query);
+                echo "";
+                while($row = $res->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value=" . $row['employer_id'] . ">". $row['company_name'] . "</option> ";
+                }
+            } catch (PDOException $e) {
+                die($e->getMessage());
             }
-            echo "</ul>";
-        } catch (PDOException $e) {
-            die($e->getMessage());
         }
-    }
-?>
+        ?>
+    </datalist>
+
+</form>
+<!-- SEARCH BAR IMPLEMENTATION -->
 
 <form action="review_employer.php" method="POST">
-    <label for="employerId"><br>Employer ID: (TEMP)</label>
-        <input type="number" name="employerId" placeholder="Employer ID" id="employerId" required
-               value="<?php if(isset($_POST['employerId'])){ echo $_POST['employerId']; } ?>" />
+
+    <!--TODO: Modify the datalist below with react-->
+
+    <label for="employerId" class="">Select company to Review:</label>
+    <input class="" list="companyOptions" id="employerId" placeholder="Type to search...">
 
 
     <label for="jobTitle"><br>Job Title: </label>
@@ -172,40 +175,56 @@ require_once 'database.php';
 <p></p>
 
 <?php
-$employerId = $_POST['employerId'];
-$reviewDateTime = date('Y-m-d H:i:s');
-$advice = $_POST['advice'];
-$cons = $_POST['cons'];
-$employmentStatus = $_POST['employmentStatus'];
-$isCurrentJob = $_POST['isCurrentJob'];
-$jobEndingYear = date_parse($_POST['employed_to'])["year"];
-$jobTitle = $_POST['jobTitle'];
-$lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
-$pros = $_POST['pros'];
-$ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
-$ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
-$ratingCeo = $_POST['ratingCeo'];
-$ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
-$ratingCultureAndValues = $_POST['ratingCultureAndValues'];
-$ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
-$ratingOverall = $_POST['ratingOverall'];
-$ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
-$ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
-$ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
-$summary = $_POST['summary'];
 
-try {
-    $res = $open_review_s_db->query("INSERT INTO employerReview_S (employerId, reviewDateTime, advice, cons, 
-                              employmentStatus, isCurrentJob, jobEndingYear, jobTitle, lengthOfEmployment, pros, 
-                              ratingBusinessOutlook, ratingCareerOpportunities, ratingCeo, ratingCompensationAndBenefits, 
-                              ratingCultureAndValues, ratingDiversityAndInclusion, ratingOverall, ratingRecommendToFriend, 
-                              ratingSeniorLeadership, ratingWorkLifeBalance, summary) values (?, ?, ?, ?, ?, ?, ?, ?,
-                                                                                              ?, ?, ?, ?, ?, ?, ?, ?, 
-                                                                                              ?, ?, ?, ?, ?)");
+    if (isset($_POST['employerId']) &&
+        isset($_POST['advice']) &&
+        isset($_POST['cons']) &&
+        isset($_POST['pros']) &&
+        isset($_POST['ratingCareerOpportunities']) &&
+        isset($_POST['ratingCeo']) &&
+        isset($_POST['ratingCompensationAndBenefits']) &&
+        isset($_POST['ratingCultureAndValues']) &&
+        isset($_POST['ratingDiversityAndInclusion']) &&
+        isset($_POST['ratingOverall']) &&
+        isset($_POST['ratingRecommendToFriend']) &&
+        isset($_POST['ratingSeniorLeadership']) &&
+        isset($_POST['ratingWorkLifeBalance']) &&
+        isset($_POST['summary'])) { //Check for the mandatory values:
+        $employerId = $_POST['employerId'];
+        $advice = $_POST['advice'];
+        $cons = $_POST['cons'];
+        $pros = $_POST['pros'];
+        $ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
+        $ratingCeo = $_POST['ratingCeo'];
+        $ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
+        $ratingCultureAndValues = $_POST['ratingCultureAndValues'];
+        $ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
+        $ratingOverall = $_POST['ratingOverall'];
+        $ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
+        $ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
+        $ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
+        $summary = $_POST['summary'];
+        $reviewDateTime = date('Y-m-d H:i:s');
+        $jobEndingYear = date_parse($_POST['employed_to'])["year"];
+        $lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
+        $employmentStatus = $_POST['employmentStatus'];
+        $isCurrentJob = $_POST['isCurrentJob'];
+        $jobTitle = $_POST['jobTitle'];
+        $ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
 
-} catch (PDOException $e) {
-    die($e->getMessage());
-}
+        $review = new Review(0, $employerId, $reviewDateTime,$advice, $cons,
+            $employmentStatus, $isCurrentJob, $jobEndingYear, $jobTitle, $lengthOfEmployment, $pros,
+            $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo, $ratingCompensationAndBenefits,
+            $ratingCultureAndValues, $ratingDiversityAndInclusion, $ratingOverall, $ratingRecommendToFriend,
+            $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary);
+
+        insertReview($review);
+    }
+
+
+
+
+
 
 ?>
 </body>
