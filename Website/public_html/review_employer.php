@@ -51,7 +51,7 @@
     }
 ?>
 
-<form action="" method="POST">
+<form action="review_employer.php" method="POST">
     <label for="employerId"><br>Employer ID: (TEMP)</label>
         <input type="number" name="employerId" placeholder="Employer ID" id="employerId" required
                value="<?php if(isset($_POST['employerId'])){ echo $_POST['employerId']; } ?>" />
@@ -67,7 +67,7 @@
                value="<?php if(isset($_POST['employed_from'])){ echo $_POST['employed_from']; } ?>" />
 
 
-    <label for="employedTo"><br>Employed To:</label>
+    <label for="employedTo"><br>Employed Until:</label>
         <input type="date" name="employed_to" placeholder="Select Date" id="employedTo" required
                value="<?php if(isset($_POST['employed_to'])){ echo $_POST['employed_to']; } ?>" />
 
@@ -82,9 +82,9 @@
 
     <label for="ratingCeo"><br>CEO:</label>
         <select id="ratingCeo" name="ratingCeo" required>
+            <option value="NO_OPINION">No Opinion</option>
             <option value="APPROVE">Approved</option>
             <option value="DISAPPROVE">Not Approved</option>
-            <option value="NO_OPINION">No Opinion</option>
         </select>
 
     <label for="ratingCompensationAndBenefits"><br>Compensation & Benefits</label>
@@ -161,23 +161,44 @@
         <option value="5">
     </datalist>
     <br>
-    <button type="submit"> Submit Review </button>
+
+    <button type="submit" value="" name=""> Submit Review </button>
 </form>
 
 <p></p>
 
 <?php
+$employerId = $_POST['employerId'];
+$reviewDateTime = date('Y-m-d H:i:s');
+$advice = $_POST['advice'];
+$cons = $_POST['cons'];
+$employmentStatus = $_POST['employmentStatus'];
+$isCurrentJob = $_POST['isCurrentJob'];
+$jobEndingYear = date_parse($_POST['employed_to'])["year"];
+$jobTitle = $_POST['jobTitle'];
+$lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
+$pros = $_POST['pros'];
+$ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
+$ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
+$ratingCeo = $_POST['ratingCeo'];
+$ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
+$ratingCultureAndValues = $_POST['ratingCultureAndValues'];
+$ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
+$ratingOverall = $_POST['ratingOverall'];
+$ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
+$ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
+$ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
+$summary = $_POST['summary'];
 
 try {
     $res = $open_review_s_db->query("INSERT INTO employerReview_S (employerId, reviewDateTime, advice, cons, 
-                              employmentStatus, isCurrentJob, jobEndingYear, jobTitle, lengthOfEmployment, pros, ratingBusinessOutlook,
-                              ratingCareerOpportunities, ratingCeo, ratingCompensationAndBenefits, ratingCultureAndValues,
-                              ratingDiversityAndInclusion, ratingOverall, ratingRecommendToFriend, ratingSeniorLeadership,
-                              ratingWorkLifeBalance, summary) values (?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,?,
-                                                                      ?, ?, ?, ?, ?, ? ,? ,? ,? , ?)");
-    while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-        echo $row['company_name'] . " | " . $row['overall_rating'] . "\n";
-    }
+                              employmentStatus, isCurrentJob, jobEndingYear, jobTitle, lengthOfEmployment, pros, 
+                              ratingBusinessOutlook, ratingCareerOpportunities, ratingCeo, ratingCompensationAndBenefits, 
+                              ratingCultureAndValues, ratingDiversityAndInclusion, ratingOverall, ratingRecommendToFriend, 
+                              ratingSeniorLeadership, ratingWorkLifeBalance, summary) values (?, ?, ?, ?, ?, ?, ?, ?,
+                                                                                              ?, ?, ?, ?, ?, ?, ?, ?, 
+                                                                                              ?, ?, ?, ?, ?)");
+
 } catch (PDOException $e) {
     die($e->getMessage());
 }
