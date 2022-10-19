@@ -1,3 +1,6 @@
+<?php
+require_once 'database.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +29,14 @@
 </form>
 <!-- SEARCH BAR IMPLEMENTATION -->
 <?php
-    try {
-    //    $open_review_s_db = new PDO("sqlite:open_review_s_sqlite.db");
-        $open_review_s_db = new PDO("sqlite:/Applications/AMPPS/www/Assignment1/open_review_s_sqlite.db");
-        $open_review_s_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die($e->getMessage());
-    }
+//    try {
+//    //    $open_review_s_db = new PDO("sqlite:open_review_s_sqlite.db");
+//        $open_review_s_db = new PDO("sqlite:/Applications/AMPPS/www/Assignment1/open_review_s_sqlite.db");
+//        $open_review_s_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//    } catch (PDOException $e) {
+//        die($e->getMessage());
+//    }
+    $open_review_s_db = openConnection();
     if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
         $filter_params = $_GET['select_company'];
         $query = "SELECT employer_id, company_name
