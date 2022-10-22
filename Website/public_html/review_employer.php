@@ -5,18 +5,38 @@ require_once 'database.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content=" Best Job Review tool">
+    <meta name="keywords" content="Employer Rankings, Review Employer">
+    <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FakeName.com - Review Employer</title>
+    <title>OpenReviewPlus.com - Review Employer</title>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
     <div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="employer_rankings.php">Employer Rankings</a></li>
-                <li><a href="review_employer.php">Review an Employer</a></li>
-            </ul>
+        <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
+            <div class="container">
+                <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">-->
+                <!--            <span class="navbar-toggler-icon"></span>-->
+                <!--        </button>-->
+                <!--        <a class="navbar-brand" href="#"><img src="img/E16.jpg " height="40" width="50" alt=""></a>-->
+                <div class="collapse navbar-collapse " id="Navbar">
+
+                    <img class="nav" src="" alt="">
+                    <ul class="list-unstyled navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link fa fa-home" href="index.html">Home</a></li>
+                        <!--                <li class="nav-item"><a class="nav-link fa fa-overview" href="overview.html">Overview</a></li>-->
+                        <li class="nav-item"><a class="nav-link fa fa-rank" href="employer_rankings.php">Employer Rankings</a></li>
+                        <li class="nav-item"><a class="nav-link fa fa-review" href="review_employer.php">Review an Employer</a></li>
+                        <!--                <li class="nav-item"><a class="nav-link fa fa-sign-in" href="sign_in_page.html">Sign In / Register</a></li>-->
+                        <!--                <li class="nav-item"><a class="nav-link fa fa-address-card" href="./contactus.html">Contact Us</a></li>-->
+                    </ul>
+                    <!--            <span class="btn fa fa-sign-in" data-toggle="modal" data-target="#loginmodal">Login</span>-->
+                </div>
+            </div>
         </nav>
+        
         <!--TODO: Please add style to this boring form-->
         <!--TODO: I'm about to finish the implementation for this page. ( To add a new review in the DB )-->
         <h1>Rate an employer</h1>
@@ -231,6 +251,35 @@ require_once 'database.php';
         ?>
     </div>
 
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <h2>Contact Us</h2>
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-phone"></i>03 369 3999</li>
+                    <li><a class="fa fa-envelope" href="https://gmail.com" style="color:white">openreviewplus_customersupport@gmail.com</a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <div class="col-12 col-sm-4">
+                <h2>Address</h2>
+                <p>20 Kirkwood Avenue</p>
+                <p>Upper Riccarton</p>
+                <p>Christchurch, New Zealand</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>©Copyright 2022 INFO263</p>
+            </div>
+        </div>
+    </div>
+</footer>
+            
 </body>
 </html>
 
