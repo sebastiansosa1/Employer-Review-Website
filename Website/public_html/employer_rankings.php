@@ -3,57 +3,53 @@ require_once 'database.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content=" Best Job Review tool">
+    <meta name="description" content="Best Job Review tool">
     <meta name="keywords" content="Employer Rankings, Review Employer">
     <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenReviewPlus.com - Overview</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>OpenReviewPlus.com - Ranking</title>
+
     <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $('#navbar').load('components/navbar.html');
+            $('#footer').load('components/footer.html');
+        });
+    </script>
 </head>
+
 <body>
-<div>
 
-    <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
-        <div class="container">
-            <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">-->
-            <!--            <span class="navbar-toggler-icon"></span>-->
-            <!--        </button>-->
-            <!--        <a class="navbar-brand" href="#"><img src="img/E16.jpg " height="40" width="50" alt=""></a>-->
-            <div class="collapse navbar-collapse " id="Navbar">
+<div id="navbar"></div>
 
-                <img class="nav" src="" alt="">
-                <ul class="list-unstyled navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link fa fa-home" href="index.html">Home</a></li>
-                    <!--                <li class="nav-item"><a class="nav-link fa fa-overview" href="overview.html">Overview</a></li>-->
-                    <li class="nav-item"><a class="nav-link fa fa-rank" href="employer_rankings.php">Employer Rankings</a></li>
-                    <li class="nav-item"><a class="nav-link fa fa-review" href="review_employer.php">Review an Employer</a></li>
-                    <!--                <li class="nav-item"><a class="nav-link fa fa-sign-in" href="sign_in_page.html">Sign In / Register</a></li>-->
-                    <!--                <li class="nav-item"><a class="nav-link fa fa-address-card" href="./contactus.html">Contact Us</a></li>-->
-                </ul>
-                <!--            <span class="btn fa fa-sign-in" data-toggle="modal" data-target="#loginmodal">Login</span>-->
-            </div>
-        </div>
-    </nav>
-<h1>Employer Ratings</h1>
-<!--    TODO: Add style to this page, just like: https://nz.indeed.com/companies?from=gnav-homepage-->
-<!--    TODO: I might need to add the implementation for the selected company, just like the sketch we made-->
-<h2>(This is the overview page - :D )</h2>
+<main style="background-color: rgb(230, 243, 218)">
+    <div class="d-flex justify-content-center">
+        <h1>Employer Ranking</h1>
+    </div>
 
-<p>Overview Page - Add search bar to browse employers</p>
-<div>
-    <form action="" method="GET">
-        <label>
-            <input type="search" name="search" placeholder="Company"
-                   value="<?php if(isset($_GET['search'])){ echo $_GET['search']; } ?>" >
-        </label>
-        <button type="submit"> Search </button>
-    </form>
-</div>
 
-<p>Show top employers and ratings as links to view review...</p>
+    <div class="d-flex">
+        <form class="d-flex" role="search" method="GET">
+            <input class="form-control me-2" type="search" placeholder="Search Company" aria-label="Search"
+                   name="search" value="<?php if(isset($_GET['search'])){ echo $_GET['search']; } ?>">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+
+
+    <p>Show top employers and ratings as links to view review...</p>
     <table>
         <thead>
         <tr>
@@ -78,18 +74,18 @@ require_once 'database.php';
         if(isset($_GET['search'])) {
             $filter_params = $_GET['search'];
             $query = "SELECT company_name, reviews_count, business_outlook_rating, career_opportunities_rating,
-            ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
-            recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
-            FROM reviewedEmployer_S
-            WHERE company_name LIKE '%$filter_params%'
-            ORDER BY overall_rating DESC";
+                    ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
+                    recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
+                    FROM reviewedEmployer_S
+                    WHERE company_name LIKE '%$filter_params%'
+                    ORDER BY overall_rating DESC";
 
         } else {
             $query = "SELECT company_name, reviews_count, business_outlook_rating, career_opportunities_rating,
-            ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
-            recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
-            FROM reviewedEmployer_S
-            ORDER BY overall_rating DESC";
+                    ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
+                    recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
+                    FROM reviewedEmployer_S
+                    ORDER BY overall_rating DESC";
         }
         try {
             $res = $open_review_s_db->query($query);
@@ -113,41 +109,28 @@ require_once 'database.php';
             die($e->getMessage());
         }
 
-
         ?>
         </tbody>
     </table>
-</div>
-    
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-sm-4">
-                <h2>Contact Us</h2>
-                <ul class="list-unstyled">
-                    <li><i class="fa fa-phone"></i>03 369 3999</li>
-                    <li><a class="fa fa-envelope" href="https://gmail.com" style="color:white">openreviewplus_customersupport@gmail.com</a>
-                    </li>
-
-                </ul>
-            </div>
+</main>
 
 
-            <div class="col-12 col-sm-4">
-                <h2>Address</h2>
-                <p>20 Kirkwood Avenue</p>
-                <p>Upper Riccarton</p>
-                <p>Christchurch, New Zealand</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <p>©Copyright 2022 INFO263</p>
-            </div>
-        </div>
-    </div>
-</footer>
-    
+<!--            FOOTER           -->
+<div id="footer"></div>
+
+<!--            SCRIPTS            -->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"-->
+<!--            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"-->
+<!--            crossorigin="anonymous"></script>-->
+
+<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" -->
+<!--            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" -->
+<!--            crossorigin="anonymous"></script>-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
 

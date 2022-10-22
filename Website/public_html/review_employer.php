@@ -5,201 +5,231 @@ require_once 'database.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content=" Best Job Review tool">
+    <meta name="description" content="Best Job Review tool">
     <meta name="keywords" content="Employer Rankings, Review Employer">
     <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenReviewPlus.com - Review Employer</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>OpenReviewPlus.com - Ranking</title>
+
     <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $('#navbar').load('components/navbar.html');
+            $('#footer').load('components/footer.html');
+        });
+    </script>
 </head>
+
+
+
 <body>
-    <div>
-        <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
-            <div class="container">
-                <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">-->
-                <!--            <span class="navbar-toggler-icon"></span>-->
-                <!--        </button>-->
-                <!--        <a class="navbar-brand" href="#"><img src="img/E16.jpg " height="40" width="50" alt=""></a>-->
-                <div class="collapse navbar-collapse " id="Navbar">
 
-                    <img class="nav" src="" alt="">
-                    <ul class="list-unstyled navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link fa fa-home" href="index.html">Home</a></li>
-                        <!--                <li class="nav-item"><a class="nav-link fa fa-overview" href="overview.html">Overview</a></li>-->
-                        <li class="nav-item"><a class="nav-link fa fa-rank" href="employer_rankings.php">Employer Rankings</a></li>
-                        <li class="nav-item"><a class="nav-link fa fa-review" href="review_employer.php">Review an Employer</a></li>
-                        <!--                <li class="nav-item"><a class="nav-link fa fa-sign-in" href="sign_in_page.html">Sign In / Register</a></li>-->
-                        <!--                <li class="nav-item"><a class="nav-link fa fa-address-card" href="./contactus.html">Contact Us</a></li>-->
-                    </ul>
-                    <!--            <span class="btn fa fa-sign-in" data-toggle="modal" data-target="#loginmodal">Login</span>-->
-                </div>
-            </div>
-        </nav>
-        
-        <!--TODO: Please add style to this boring form-->
-        <!--TODO: I'm about to finish the implementation for this page. ( To add a new review in the DB )-->
+<div id="navbar"></div>
+
+<main style="background-color: rgb(230, 243, 218)">
+
+    <div class="d-flex justify-content-center">
         <h1>Rate an employer</h1>
+    </div>
 
-        <p>Instructions: Temporal solution for searching a company to review. Write in the search bar at least 3 letters
-            of the name of the company, then press the button search and the results will be options to select in the field below.</p>
+    <section class="mt-5">
+        <div class="container">
+            <div id="section class=container-md">
 
+                <p>Instructions: Temporal solution for searching a company to review.<br>
+                    Write in the search bar at least 3 letters
+                    of the name of the company, then press the button search and the results will be options to select in the field below.</p>
 
-        <!--                              SEARCH COMPANY FORM                             -->
-        <form action="" method="GET">
-            <label for="select_company"></label>
-            <br>Search a company to review:<br>
-            <input type="search" name="select_company" placeholder="Company Name" id="select_company"
-                   value="<?php if(isset($_GET['select_company'])){ echo $_GET['select_company']; } ?>" >
-            <button type="submit"> Search </button>
+            </div>
 
-            <!--    <label for="select_company" class="form-label">Company to Review:</label>-->
-            <!--    <input class="form-control" list="companyOptions" id="select_company" placeholder="Type to search..."-->
-            <!--    value="--><?php //if(isset($_GET['select_company'])){ echo $_GET['select_company']; } ?><!--">-->
-            <!--    <button type="submit"> Search </button>-->
+            <!--                              SEARCH COMPANY FORM                             -->
+            <div class="d-flex">
+                <form class="d-flex" role="search" method="GET">
+                    <input class="form-control me-2" type="select_company" placeholder="Company Name" aria-label="Search"
+                           name="select_company" value="<?php if(isset($_GET['select_company'])){ echo $_GET['select_company']; } ?>">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
 
+            <!--                                SUBMIT REVIEW FORM                               -->
+            <div class="d-flex justify-content-right">
+                <form action="review_employer.php" method="POST" enctype="multipart/form-data">
 
-            <datalist id='companyOptions'>
-                <?php
-                $open_review_s_db = openConnection();
-                if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
-                    $filter_params = $_GET['select_company'];
-                    $query = "SELECT employer_id, company_name
-                FROM employer
-                WHERE company_name LIKE '%$filter_params%'";
-                    try {
-                        $res = $open_review_s_db->query($query);
-                        echo "";
-                        while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<option value=" . $row['employer_id'] . ">". $row['company_name'] . "</option> ";
-                        }
-                    } catch (PDOException $e) {
-                        die($e->getMessage());
-                    }
-                }
-                ?>
-            </datalist>
-        </form>
+                    <label for="employerId" class="form-label"><br>Company to Review:</label>
+                    <input class="form-control" list="companyOptions" id="employerId" name="employerId" placeholder="Type to search...">
+                    <br/>
+
+                    <label for="jobTitle" class="form-label"><br>Job Title: </label>
+                    <input type="text" name="jobTitle" placeholder="Job Title" id="jobTitle" />
+                    <br/>
 
 
-        <!--                                SUBMIT REVIEW FORM                               -->
-        <form action="review_employer.php" method="post" enctype="multipart/form-data">
-
-            <!--TODO: Modify the datalist below with React-->
-
-            <label for="employerId"><br>Select company to Review:</label>
-            <input class="" list="companyOptions" id="employerId" name="employerId" placeholder="Type to search...">
-
-            <label for="jobTitle"><br>Job Title: </label>
-            <input type="text" name="jobTitle" placeholder="Job Title" id="jobTitle" />
+                    <label for="employedFrom" class="form-label"><br>Employed From:</label>
+                    <input type="date" name="employed_from" placeholder="Select Date" id="employedFrom" required />
+                    <br/>
 
 
-            <label for="employedFrom"><br>Employed From:</label>
-            <input type="date" name="employed_from" placeholder="Select Date" id="employedFrom" required />
+                    <label for="employedTo" class="form-label"><br>Employed Until:</label>
+                    <input type="date" name="employed_to" placeholder="Select Date" id="employedTo" required />
+                    <br/>
 
 
-            <label for="employedTo"><br>Employed Until:</label>
-            <input type="date" name="employed_to" placeholder="Select Date" id="employedTo" required />
+                    <label for="isCurrentJob" class="form-label"><br>Still employed?:</label>
+                    <select id="isCurrentJob" name="isCurrentJob" required >
+                        <option value="">--</option>
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                    </select>
+                    <br/>
 
 
-            <label for="isCurrentJob"><br>Still employed?:</label>
-            <select id="isCurrentJob" name="isCurrentJob" required >
-                <option value="">--</option>
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
+                    <label for="ratingCeo" class="form-label"><br>CEO:</label>
+                    <select id="ratingCeo" name="ratingCeo" required>
+                        <option value="NO_OPINION">No Opinion</option>
+                        <option value="APPROVE">Approved</option>
+                        <option value="DISAPPROVE">Not Approved</option>
+                    </select>
+                    <br/>
+
+                    <label for="ratingCompensationAndBenefits" class="form-label"><br>Compensation & Benefits</label>
+                    <input list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"
+                           placeholder="Rate" required/>
+                    <br/>
+
+                    <label for="ratingCareerOpportunities" class="form-label"><br>Career Opportunities</label>
+                    <input list="rate" name="ratingCareerOpportunities" id="ratingCareerOpportunities"
+                           placeholder="Rate" required/>
+                    <br/>
+
+                    <label for="ratingBusinessOutlook" class="form-label"><br>Business Outlook</label>
+                    <input list="rate" name="ratingBusinessOutlook" id="ratingBusinessOutlook"
+                           placeholder="Rate"/>
+                    <br/>
+
+                    <label for="ratingCultureAndValues" class="form-label"><br>Culture And Values</label>
+                    <input list="rate" name="ratingCultureAndValues" id="ratingCultureAndValues"
+                           placeholder="Rate" required/>
+                    <br/>
 
 
-            <label for="ratingCeo"><br>CEO:</label>
-            <select id="ratingCeo" name="ratingCeo" required>
-                <option value="NO_OPINION">No Opinion</option>
-                <option value="APPROVE">Approved</option>
-                <option value="DISAPPROVE">Not Approved</option>
-            </select>
-
-            <label for="ratingCompensationAndBenefits"><br>Compensation & Benefits</label>
-            <input list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"
-                   placeholder="Rate" required/>
-
-            <label for="ratingCareerOpportunities"><br>Career Opportunities</label>
-            <input list="rate" name="ratingCareerOpportunities" id="ratingCareerOpportunities"
-                   placeholder="Rate" required/>
-
-            <label for="ratingBusinessOutlook"><br>Business Outlook</label>
-            <input list="rate" name="ratingBusinessOutlook" id="ratingBusinessOutlook"
-                   placeholder="Rate"/>
-
-            <label for="ratingCultureAndValues"><br>Culture And Values</label>
-            <input list="rate" name="ratingCultureAndValues" id="ratingCultureAndValues"
-                   placeholder="Rate" required/>
-
-
-            <label for="ratingDiversityAndInclusion"><br>Diversity & Inclusion<label>
+                    <label for="ratingDiversityAndInclusion" class="form-label"><br>Diversity & Inclusion</label>
                     <input list="rate" name="ratingDiversityAndInclusion" id="ratingDiversityAndInclusion"
                            placeholder="Rate" required pattern="[0-5]{1}"/>
+                    <br/>
 
 
-                    <label for="ratingSeniorLeadership"><br>Senior Leadership</label>
+                    <label for="ratingSeniorLeadership" class="form-label"><br>Senior Leadership</label>
                     <input list="rate" name="ratingSeniorLeadership" id="ratingSeniorLeadership"
                            placeholder="Rate" required/>
+                    <br/>
 
 
-                    <label for="ratingWorkLifeBalance"><br>Work-Life Balance</label>
+                    <label for="ratingWorkLifeBalance" class="form-label"><br>Work-Life Balance</label>
                     <input list="rate" name="ratingWorkLifeBalance" id="ratingWorkLifeBalance"
                            placeholder="Rate" required/>
+                    <br/>
 
 
-                    <label for="ratingOverall"><br>Overall Rating</label>
+                    <label for="ratingOverall" class="form-label"><br>Overall Rating</label>
                     <input list="rate" name="ratingOverall" id="ratingOverall"
                            placeholder="Rate" required>
+                    <br/>
 
 
-                    <label for="ratingRecommendedToFriend"><br>Recommend to a friend?</label>
+                    <label for="ratingRecommendedToFriend" class="form-label"><br>Recommend to a friend?</label>
                     <select id="ratingRecommendedToFriend" name="ratingRecommendedToFriend">
                         <option value="<null>">--</option>
                         <option value="POSITIVE">Yes</option>
                         <option value="NEGATIVE">No</option>
                     </select>
+                    <br/>
 
 
-                    <label for="advice"><br>Advice:<br></label>
-                    <textarea id="advice" name="advice" rows="4" cols="50" required placeholder="Write your advice here...">
-    </textarea>
+                    <label for="advice" class="form-label"><br>Advice:<br></label>
+                    <textarea id="advice" name="advice" rows="4" cols="50" required
+                              placeholder="Write your advice here..."></textarea>
+                    <br/>
 
 
-                    <label for="pros"><br>Pros:<br></label>
-                    <textarea id="pros" name="pros" rows="4" cols="50" required placeholder="Pros of working at this company...">
-    </textarea>
+                    <label for="pros" class="form-label"><br>Pros:<br></label>
+                    <textarea id="pros" name="pros" rows="4" cols="50" required
+                              placeholder="Pros of working at this company..."></textarea>
+                    <br/>
 
 
-                    <label for="cons"><br>Cons:<br></label>
-                    <textarea id="cons" name="cons" rows="4" cols="50" required placeholder="Cons of working at this company...">
-    </textarea>
+                    <label for="cons" class="form-label"><br>Cons:<br></label>
+                    <textarea id="cons" name="cons" rows="4" cols="50" required
+                              placeholder="Cons of working at this company..."></textarea>
+                    <br/>
 
 
-                    <label for="summary"><br>Summary:<br></label>
-                    <textarea id="summary" name="summary" rows="4" cols="50" required placeholder="To sum up, my opinion is...">
-    </textarea>
+                    <label for="summary" class="form-label"><br>Summary:<br></label>
+                    <textarea id="summary" name="summary" rows="4" cols="50" required
+                              placeholder="To sum up, my opinion is..."></textarea>
+                    <br/>
+                    <br/>
+
+                    <input type="submit" value="Submit Review" name="submitReview" id="submitReview"/>
+                    <br/>
+                    <br/>
+
+                </form>
+            </div>
 
 
-                    <datalist id="rate">
-                        <option value="0">
-                        <option value="1">
-                        <option value="2">
-                        <option value="3">
-                        <option value="4">
-                        <option value="5">
-                    </datalist>
-                    <br>
+        </div>
+    </section>
 
-                    <input type="submit" value="Submit Review" id="submitReview"/>
-        </form>
+    <datalist id="rate">
+        <option value="0">
+        <option value="1">
+        <option value="2">
+        <option value="3">
+        <option value="4">
+        <option value="5">
+    </datalist>
 
-        <p></p>
 
+
+
+
+
+    <datalist id='companyOptions'>
         <?php
+        $open_review_s_db = openConnection();
+        if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
+            $filter_params = $_GET['select_company'];
+            $query = "SELECT employer_id, company_name FROM employer WHERE company_name LIKE '%$filter_params%'";
+            try {
+                $res = $open_review_s_db->query($query);
+                echo "";
+                while($row = $res->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value=" . $row['employer_id'] . ">". $row['company_name'] . "</option> ";
+                }
+            } catch (PDOException $e) {
+                die($e->getMessage());
+            }
+        }
+        ?>
+    </datalist>
 
-        if (isset($_POST['submitReview']))
+
+
+
+    <?php
+
+    if (isset($_POST['submitReview']))
+    {
+        debug_to_console("posted");
 //            &&
 //            isset($_POST['employerId']) &&
 //            isset($_POST['advice']) &&
@@ -215,71 +245,109 @@ require_once 'database.php';
 //            isset($_POST['ratingSeniorLeadership']) &&
 //            isset($_POST['ratingWorkLifeBalance']) &&
 //            isset($_POST['summary']))
-        {
-            $employerId = $_POST['employerId'];
-            $advice = $_POST['advice'];
-            $cons = $_POST['cons'];
-            $pros = $_POST['pros'];
-            $ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
-            $ratingCeo = $_POST['ratingCeo'];
-            $ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
-            $ratingCultureAndValues = $_POST['ratingCultureAndValues'];
-            $ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
-            $ratingOverall = $_POST['ratingOverall'];
-            $ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
-            $ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
-            $ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
-            $summary = $_POST['summary'];
-            $reviewDateTime = (new DateTime())->format('Y-m-d H:i:s');
-            $jobEndingYear = date_parse($_POST['employed_to'])["year"];
-            $lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
-            $employmentStatus = $_POST['employmentStatus'];
-            $isCurrentJob = $_POST['isCurrentJob'];
-            $jobTitle = $_POST['jobTitle'];
-            $ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
+        $review = new Review();
 
-            $review = new Review($employerId, $reviewDateTime,$advice, $cons,
-                $employmentStatus, $isCurrentJob, $jobEndingYear, $jobTitle, $lengthOfEmployment, $pros,
-                $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo, $ratingCompensationAndBenefits,
-                $ratingCultureAndValues, $ratingDiversityAndInclusion, $ratingOverall, $ratingRecommendToFriend,
-                $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary);
-
-            echo $review;
-            insertReview($review);
+        if(isset($_POST['employerId'])) {
+            $review->setEmployerId($_POST['employerId']);
+        }
+        if(isset($_POST['advice'])) {
+            $review->setAdvice($_POST['advice']);
+        }
+        if(isset($_POST['cons'])) {
+            $review->setCons($_POST['cons']);
+        }
+        if(isset($_POST['pros'])) {
+            $review->setPros($_POST['pros']);
+        }
+        if(isset($_POST['ratingCareerOpportunities'])) {
+            $review->setRatingCareerOpportunities($_POST['ratingCareerOpportunities']);
+        }
+        if(isset($_POST['ratingCeo'])) {
+            $review->setRatingCeo($_POST['ratingCeo']);
+        }
+        if(isset($_POST['ratingCompensationAndBenefits'])) {
+            $review->setRatingCompensationAndBenefits($_POST['ratingCompensationAndBenefits']);
+        }
+        if(isset($_POST['ratingCultureAndValues'])) {
+            $review->setRatingCultureAndValues($_POST['ratingCultureAndValues']);
+        }
+        if(isset($_POST['ratingDiversityAndInclusion'])) {
+            $review->setRatingDiversityAndInclusion($_POST['ratingDiversityAndInclusion']);
+        }
+        if(isset($_POST['ratingOverall'])) {
+            $review->setRatingOverall($_POST['ratingOverall']);
+        }
+        if(isset($_POST['ratingRecommendToFriend'])) {
+            $review->setRatingRecommendToFriend($_POST['ratingRecommendToFriend']);
+        }
+        if(isset($_POST['ratingSeniorLeadership'])) {
+            $review->setRatingSeniorLeadership($_POST['ratingSeniorLeadership']);
+        }
+        if(isset($_POST['ratingWorkLifeBalance'])) {
+            $review->setRatingWorkLifeBalance($_POST['ratingWorkLifeBalance']);
+        }
+        if(isset($_POST['summary'])) {
+            $review->setSummary($_POST['summary']);
         }
 
-        ?>
-    </div>
+        $timeStamp = (new DateTime())->format('Y-m-d H:i:s');
+        $review->setReviewDateTime($timeStamp);
 
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-sm-4">
-                <h2>Contact Us</h2>
-                <ul class="list-unstyled">
-                    <li><i class="fa fa-phone"></i>03 369 3999</li>
-                    <li><a class="fa fa-envelope" href="https://gmail.com" style="color:white">openreviewplus_customersupport@gmail.com</a>
-                    </li>
+        if(isset($_POST['employed_to'])) {
+            $review->setJobEndingYear(date_parse($_POST['employed_to'])["year"]);
+        }
+        if(isset($_POST['employed_to']) && isset($_POST['employed_from'])) {
+            $review->setLengthOfEmployment(date_parse($_POST['employed_to'])["year"] -
+                date_parse($_POST['employed_from'])["year"]);
+        }
+        if(isset($_POST['employerId'])) {
+            $review->setEmploymentStatus($_POST['employerId']);
+        }
+        if(isset($_POST['advice'])) {
+            $review->setIsCurrentJob($_POST['advice']);
+        }
+        if(isset($_POST['cons'])) {
+            $review->setJobTitle($_POST['cons']);
+        }
+        if(isset($_POST['pros'])) {
+            $review->setRatingBusinessOutlook($_POST['pros']);
+        }
+//            $employerId = $_POST['employerId'];
+//            $advice = $_POST['advice'];
+//            $cons = $_POST['cons'];
+//            $pros = $_POST['pros'];
+//            $ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
+//            $ratingCeo = $_POST['ratingCeo'];
+//            $ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
+//            $ratingCultureAndValues = $_POST['ratingCultureAndValues'];
+//            $ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
+//            $ratingOverall = $_POST['ratingOverall'];
+//            $ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
+//            $ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
+//            $ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
+//            $summary = $_POST['summary'];
+//            $reviewDateTime = (new DateTime())->format('Y-m-d H:i:s');
+//            $jobEndingYear = date_parse($_POST['employed_to'])["year"];
+//            $lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
+//            $employmentStatus = $_POST['employmentStatus'];
+//            $isCurrentJob = $_POST['isCurrentJob'];
+//            $jobTitle = $_POST['jobTitle'];
+//            $ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
 
-                </ul>
-            </div>
+//            $review = new Review($employerId, $reviewDateTime,$advice, $cons,
+//                $employmentStatus, $isCurrentJob, $jobEndingYear, $jobTitle, $lengthOfEmployment, $pros,
+//                $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo, $ratingCompensationAndBenefits,
+//                $ratingCultureAndValues, $ratingDiversityAndInclusion, $ratingOverall, $ratingRecommendToFriend,
+//                $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary);
 
+        debug_to_console($review);
+        insertReview($review);
+    }
 
-            <div class="col-12 col-sm-4">
-                <h2>Address</h2>
-                <p>20 Kirkwood Avenue</p>
-                <p>Upper Riccarton</p>
-                <p>Christchurch, New Zealand</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <p>©Copyright 2022 INFO263</p>
-            </div>
-        </div>
-    </div>
-</footer>
-            
+    ?>
+</main>
+
+<div id="footer"></div>
 </body>
 </html>
 
