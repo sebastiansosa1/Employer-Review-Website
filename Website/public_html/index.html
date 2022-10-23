@@ -34,7 +34,7 @@
         $(function(){
             $('#navbar').load('components/navbar.html');
             $('#footer').load('components/footer.html');
-            $('#chart').load('js/script.js');
+             $('#chart').load('chart_doc.html');
         });
     </script>
 </head>
@@ -67,7 +67,9 @@
                             <p>Replace image below with (perhaps) a top-5 ranking and/or a graph</p>
                              <!--<img src="img/E16.jpg" width="500" alt="UC E16 lecture theatre."/> -->
                              <!--            CHART            -->
-                            <div id="chart"></div>
+                            <div id="chart">
+                                <canvas id="myChart"></canvas>
+                            </div>
                         </div>
                     </div>
 
