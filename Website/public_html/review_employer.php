@@ -4,16 +4,25 @@ require_once 'database.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--                META CHARSET                -->
     <meta charset="UTF-8">
-    <meta name="description" content="Best Job Review tool">
-    <meta name="keywords" content="Employer Rankings, Review Employer">
-    <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
-
+    <!--                META VIEWPORT                -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                META EDGE                -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--                META DESCRIPTION                -->
+    <meta name="description" content="OpenReview+ is the best known website for employees to leave reviews of employers.
+    We have a huge number of people who rate their CEOs, and OpenReview+ reviews provide open-ended pros and cons of working at those companies.">
+    <!--                META KEYWORDS                -->
+    <meta name="keywords" content="Employer Rankings, Review Employer, Job Review, Top Companies">
+    <!--                META AUTHOR                -->
+    <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
+    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-    <title>OpenReviewPlus.com - Ranking</title>
+    <!--                TITLE              -->
+    <title>Best Job Review Tool - OpenReviewPlus.com</title>
 
     <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css" />
