@@ -1,4 +1,5 @@
 // JavaScript source code.
+
 const labels = [
     "Career Opportunities",
     "Compensation and Benefits",
