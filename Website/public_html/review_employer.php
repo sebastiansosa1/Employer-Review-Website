@@ -61,125 +61,112 @@ require_once 'database.php';
             </div>
 
             <!--                                SUBMIT REVIEW FORM                               -->
-            <div class="d-flex justify-content-right">
+            <div class="d-flex justify-content-left">
                 <form action="review_employer.php" method="POST" enctype="multipart/form-data">
 
-                    <label for="employerId" class="form-label"><br>Company to Review:</label>
+                    <label for="employerId" class="form-label">Company to Review:</label>
                     <input class="form-control" list="companyOptions" id="employerId" name="employerId" placeholder="Type to search...">
-                    <br/>
-
-                    <label for="jobTitle" class="form-label"><br>Job Title: </label>
-                    <input type="text" name="jobTitle" placeholder="Job Title" id="jobTitle" />
-                    <br/>
 
 
-                    <label for="employedFrom" class="form-label"><br>Employed From:</label>
-                    <input type="date" name="employed_from" placeholder="Select Date" id="employedFrom" required />
-                    <br/>
+                    <label for="jobTitle" class="form-label">Job Title: </label>
+                    <input class="form-control" type="text" name="jobTitle" placeholder="Job Title" id="jobTitle" />
 
 
-                    <label for="employedTo" class="form-label"><br>Employed Until:</label>
-                    <input type="date" name="employed_to" placeholder="Select Date" id="employedTo" required />
-                    <br/>
+
+                    <label for="employedFrom" class="form-label">Employed From:</label>
+                    <input class="form-control" type="date" name="employed_from" placeholder="Select Date" id="employedFrom" required />
 
 
-                    <label for="isCurrentJob" class="form-label"><br>Still employed?:</label>
-                    <select id="isCurrentJob" name="isCurrentJob" required >
+                    <label for="employedTo" class="form-label">Employed Until:</label>
+                    <input class="form-control" type="date" name="employed_to" placeholder="Select Date" id="employedTo" required />
+
+
+                    <label for="isCurrentJob" class="form-label">Still employed?:</label>
+                    <select class="form-control" id="isCurrentJob" name="isCurrentJob" required >
                         <option value="">--</option>
                         <option value="1">YES</option>
                         <option value="0">NO</option>
                     </select>
-                    <br/>
 
 
-                    <label for="ratingCeo" class="form-label"><br>CEO:</label>
-                    <select id="ratingCeo" name="ratingCeo" required>
+                    <label for="ratingCeo" class="form-label">CEO:</label>
+                    <select class="form-control" id="ratingCeo" name="ratingCeo" required>
                         <option value="NO_OPINION">No Opinion</option>
                         <option value="APPROVE">Approved</option>
                         <option value="DISAPPROVE">Not Approved</option>
                     </select>
-                    <br/>
 
-                    <label for="ratingCompensationAndBenefits" class="form-label"><br>Compensation & Benefits</label>
-                    <input list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"
+                    <!--                    SPLIT FROM HERE                 -->
+                    <label for="ratingCompensationAndBenefits" class="form-label">Compensation & Benefits</label>
+                    <input class="form-control" list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"
                            placeholder="Rate" required/>
-                    <br/>
 
-                    <label for="ratingCareerOpportunities" class="form-label"><br>Career Opportunities</label>
-                    <input list="rate" name="ratingCareerOpportunities" id="ratingCareerOpportunities"
+                    <label for="ratingCareerOpportunities" class="form-label">Career Opportunities</label>
+                    <input class="form-control" list="rate" name="ratingCareerOpportunities" id="ratingCareerOpportunities"
                            placeholder="Rate" required/>
-                    <br/>
 
-                    <label for="ratingBusinessOutlook" class="form-label"><br>Business Outlook</label>
-                    <input list="rate" name="ratingBusinessOutlook" id="ratingBusinessOutlook"
+                    <label for="ratingBusinessOutlook" class="form-label">Business Outlook</label>
+                    <input class="form-control" list="rate" name="ratingBusinessOutlook" id="ratingBusinessOutlook"
                            placeholder="Rate"/>
-                    <br/>
 
-                    <label for="ratingCultureAndValues" class="form-label"><br>Culture And Values</label>
-                    <input list="rate" name="ratingCultureAndValues" id="ratingCultureAndValues"
+                    <label for="ratingCultureAndValues" class="form-label">Culture And Values</label>
+                    <input class="form-control" list="rate" name="ratingCultureAndValues" id="ratingCultureAndValues"
                            placeholder="Rate" required/>
-                    <br/>
 
 
-                    <label for="ratingDiversityAndInclusion" class="form-label"><br>Diversity & Inclusion</label>
-                    <input list="rate" name="ratingDiversityAndInclusion" id="ratingDiversityAndInclusion"
+                    <label for="ratingDiversityAndInclusion" class="form-label">Diversity & Inclusion</label>
+                    <input class="form-control" list="rate" name="ratingDiversityAndInclusion" id="ratingDiversityAndInclusion"
                            placeholder="Rate" required pattern="[0-5]{1}"/>
-                    <br/>
 
 
-                    <label for="ratingSeniorLeadership" class="form-label"><br>Senior Leadership</label>
-                    <input list="rate" name="ratingSeniorLeadership" id="ratingSeniorLeadership"
+                    <label for="ratingSeniorLeadership" class="form-label">Senior Leadership</label>
+                    <input class="form-control" list="rate" name="ratingSeniorLeadership" id="ratingSeniorLeadership"
                            placeholder="Rate" required/>
-                    <br/>
 
 
-                    <label for="ratingWorkLifeBalance" class="form-label"><br>Work-Life Balance</label>
-                    <input list="rate" name="ratingWorkLifeBalance" id="ratingWorkLifeBalance"
+                    <label for="ratingWorkLifeBalance" class="form-label">Work-Life Balance</label>
+                    <input class="form-control" list="rate" name="ratingWorkLifeBalance" id="ratingWorkLifeBalance"
                            placeholder="Rate" required/>
-                    <br/>
 
 
-                    <label for="ratingOverall" class="form-label"><br>Overall Rating</label>
-                    <input list="rate" name="ratingOverall" id="ratingOverall"
+                    <label for="ratingOverall" class="form-label">Overall Rating</label>
+                    <input class="form-control" list="rate" name="ratingOverall" id="ratingOverall"
                            placeholder="Rate" required>
-                    <br/>
+                    <!--                    SPLIT TO HERE                 -->
 
 
-                    <label for="ratingRecommendedToFriend" class="form-label"><br>Recommend to a friend?</label>
-                    <select id="ratingRecommendedToFriend" name="ratingRecommendedToFriend">
+                    <label for="ratingRecommendedToFriend" class="form-label">Recommend to a friend?</label>
+                    <select class="form-control" id="ratingRecommendedToFriend" name="ratingRecommendedToFriend">
                         <option value="<null>">--</option>
                         <option value="POSITIVE">Yes</option>
                         <option value="NEGATIVE">No</option>
                     </select>
-                    <br/>
 
 
-                    <label for="advice" class="form-label"><br>Advice:<br></label>
-                    <textarea id="advice" name="advice" rows="4" cols="50" required
+                    <label for="advice" class="form-label">Advice:</label>
+                    <textarea class="form-control" id="advice" name="advice" rows="4" cols="50" required
                               placeholder="Write your advice here..."></textarea>
-                    <br/>
 
 
-                    <label for="pros" class="form-label"><br>Pros:<br></label>
-                    <textarea id="pros" name="pros" rows="4" cols="50" required
+                    <label for="pros" class="form-label">Pros:</label>
+                    <textarea class="form-control" id="pros" name="pros" rows="4" cols="50" required
                               placeholder="Pros of working at this company..."></textarea>
-                    <br/>
 
 
-                    <label for="cons" class="form-label"><br>Cons:<br></label>
-                    <textarea id="cons" name="cons" rows="4" cols="50" required
+
+                    <label for="cons" class="form-label">Cons:</label>
+                    <textarea class="form-control" id="cons" name="cons" rows="4" cols="50" required
                               placeholder="Cons of working at this company..."></textarea>
-                    <br/>
 
 
-                    <label for="summary" class="form-label"><br>Summary:<br></label>
-                    <textarea id="summary" name="summary" rows="4" cols="50" required
+
+                    <label for="summary" class="form-label">Summary:</label>
+                    <textarea class="form-control" id="summary" name="summary" rows="4" cols="50" required
                               placeholder="To sum up, my opinion is..."></textarea>
                     <br/>
-                    <br/>
 
-                    <input type="submit" value="Submit Review" name="submitReview" id="submitReview"/>
-                    <br/>
+                    <input class="form-control" type="submit" value="Submit Review" name="submitReview" id="submitReview"/>
+
                     <br/>
 
                 </form>
