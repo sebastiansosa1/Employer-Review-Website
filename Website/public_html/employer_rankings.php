@@ -92,7 +92,7 @@ require_once 'database.php';
                 echo "<h6 class='card-title'>" . $row['company_hq'] . "</h6>";
                 echo "<p class='card-text'>Rating: " . $row['overall_rating'] . " out of 5</p>";
                 echo "<p class='card-text'>" . $row['reviews_count'] . " reviews</p>";
-                echo "<a href=" . "reviews.php?employer=" . $row['employer_id'] . " class='btn btn-primary'>Show reviews</a>";
+                echo "<a href=" . "reviews.php?employerId=" . $row['employer_id'] . " class='btn btn-primary'>Show reviews</a>";
                 echo "<a href=" . $row['company_url'] . " class='btn btn-secondary'>See their website</a>";
                 echo "</div>";
                 echo "</div>";
