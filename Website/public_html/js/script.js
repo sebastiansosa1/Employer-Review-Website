@@ -48,7 +48,7 @@ function createChart(ratings) {
     config.data.datasets[0].data = ratings;
     Chart.overrides.polarArea.plugins.legend.position = "left";
     const chart = new Chart(
-        document.getElementById( "myChart"),
+        document.getElementById( "chart"),
         config
 );
     chart.canvas.parentNode.style.height = "300px";
