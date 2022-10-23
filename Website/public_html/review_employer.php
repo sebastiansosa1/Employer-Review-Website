@@ -11,7 +11,7 @@ require_once 'database.php';
     <!--                META EDGE                -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--                META DESCRIPTION                -->
-    <meta name="description" content="OpenReview+ is the best known website for employees to leave reviews of employers.
+    <meta name="description" content="OpenReview is the best known website for employees to leave reviews of employers.
     We have a huge number of people who rate their CEOs, and OpenReview reviews provide open-ended pros and cons of working at those companies.">
     <!--                META KEYWORDS                -->
     <meta name="keywords" content="Employer Rankings, Review Employer, Job Review, Top Companies">
