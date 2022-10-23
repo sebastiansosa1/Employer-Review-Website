@@ -17,7 +17,7 @@ require_once 'database.php';
     <meta name="keywords" content="Employer Rankings, Review Employer, Job Review, Top Companies">
     <!--                META AUTHOR                -->
     <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
-    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -47,7 +47,10 @@ require_once 'database.php';
 <main style="background-color: rgb(230, 243, 218)">
 
     <div class="d-flex justify-content-center">
-        <h1>Rate an employer</h1>
+        <h1>Rate an employer</br></h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        <h5>Your opinion is important for the community.</h5>
     </div>
 
     <section class="mt-5">

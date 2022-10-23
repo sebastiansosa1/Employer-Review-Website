@@ -18,7 +18,7 @@ require_once 'database.php';
     <meta name="keywords" content="Employer Rankings, Review Employer, Job Review, Top Companies">
     <!--                META AUTHOR                -->
     <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
-    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -47,42 +47,27 @@ require_once 'database.php';
     <div class="d-flex justify-content-center">
         <h1>Employer Ranking</h1>
     </div>
+    <div class="d-flex justify-content-center">
+        <h5>The best ranked employers</h5>
+    </div>
 
 
-    <div class="d-flex">
+    <div class="container">
         <form class="d-flex" role="search" method="GET">
             <input class="form-control me-2" type="search" placeholder="Search Company" aria-label="Search"
                    name="search" value="<?php if(isset($_GET['search'])){ echo $_GET['search']; } ?>">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
+    <br/>
+    <div class="container">
 
-
-    <p>Show top employers and ratings as links to view review...</p>
-    <table>
-        <thead>
-        <tr>
-            <th>Company Name</th>
-            <th>Reviews Count</th>
-            <th>Outlook</th>
-            <th>Career Opportunities</th>
-            <th>CEO</th>
-            <th>Compensation/Benefits</th>
-            <th>Culture & Values</th>
-            <th>Diversity and Inclusion</th>
-            <th>Recommend to a friend</th>
-            <th>Senior Leadership</th>
-            <th>Work-Life Balance</th>
-            <th>Overall Rating</th>
-        </tr>
-        </thead>
-        <tbody>
         <?php
         $open_review_s_db = openConnection();
 
         if(isset($_GET['search'])) {
             $filter_params = $_GET['search'];
-            $query = "SELECT company_name, reviews_count, business_outlook_rating, career_opportunities_rating,
+            $query = "SELECT employer_id, company_name, company_hq, company_url, reviews_count, business_outlook_rating, career_opportunities_rating,
                     ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
                     recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
                     FROM reviewedEmployer_S
@@ -90,7 +75,7 @@ require_once 'database.php';
                     ORDER BY overall_rating DESC";
 
         } else {
-            $query = "SELECT company_name, reviews_count, business_outlook_rating, career_opportunities_rating,
+            $query = "SELECT employer_id, company_name, company_hq, company_url, reviews_count, business_outlook_rating, career_opportunities_rating,
                     ceo_rating, compensation_and_benefits_rating, culture_and_values_rating, diversity_and_inclusion_rating, 
                     recommend_to_friend_rating, senior_leadership_rating, work_life_balance_rating, overall_rating 
                     FROM reviewedEmployer_S
@@ -99,28 +84,30 @@ require_once 'database.php';
         try {
             $res = $open_review_s_db->query($query);
             while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-                echo "<tr>";
-                echo "<td>" . $row['company_name'] . "</td>";
-                echo "<td>" . $row['reviews_count'] . "</td>";
-                echo "<td>" . $row['business_outlook_rating'] . "</td>";
-                echo "<td>" . $row['career_opportunities_rating'] . "</td>";
-                echo "<td>" . $row['ceo_rating'] . "</td>";
-                echo "<td>" . $row['compensation_and_benefits_rating'] . "</td>";
-                echo "<td>" . $row['culture_and_values_rating'] . "</td>";
-                echo "<td>" . $row['diversity_and_inclusion_rating'] . "</td>";
-                echo "<td>" . $row['recommend_to_friend_rating'] . "</td>";
-                echo "<td>" . $row['senior_leadership_rating'] . "</td>";
-                echo "<td>" . $row['work_life_balance_rating'] . "</td>";
-                echo "<td>" . $row['overall_rating'] . "</td>";
-                echo "</tr>";
+                echo "<div class='card'>";
+                echo "<h5 class='card-header'>";
+                echo "<img src= " . "https://api.faviconkit.com/" . trim($row['company_url'], 'http:/') .
+                    " alt='Avatar' class='avatar'>". "  " . $row['company_name'] . "</h5>";
+                echo "<div class='card-body'>";
+                echo "<h6 class='card-title'>" . $row['company_hq'] . "</h6>";
+                echo "<p class='card-text'>Rating: " . $row['overall_rating'] . " out of 5</p>";
+                echo "<p class='card-text'>" . $row['reviews_count'] . " reviews</p>";
+                echo "<a href=" . "reviews.php?employer=" . $row['employer_id'] . " class='btn btn-primary'>Show reviews</a>";
+                echo "<a href=" . $row['company_url'] . " class='btn btn-secondary'>See their website</a>";
+                echo "</div>";
+                echo "</div>";
+                echo"</br>";
             }
         } catch (PDOException $e) {
             die($e->getMessage());
         }
 
         ?>
-        </tbody>
-    </table>
+    </div>
+
+
+
+
 </main>
 
 
