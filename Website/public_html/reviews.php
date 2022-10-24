@@ -75,92 +75,116 @@ require_once 'database.php';
             <!--    REVIEW CARDS SORTED BY TIMESTAMP    -->
     <div class="container">
         <?php
-//        $open_review_s_db = openConnection();
-//        $perPage = 10;
-//        if (isset($_GET['page'])) {
-//            $page = $_GET['page'];
-//        } else {
-//            $page = 1;
-//        }
-//        $startAt = 0;//$perPage * ($page - 1);
+
+//        $perPage = 5;
+//        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+//        $startAt = $perPage * ($page - 1);
+//        $filter_params = isset($_GET['employerId'])? $_GET['employerId'] : -1;
 //
-//        if(isset($_GET['employerId'])) {
-//            $filter_params = $_GET['employerId'];
-//            $query = "SELECT COUNT(*) AS total
+//        try {
+//            $query = "SELECT COUNT(employerId) AS total
 //                    FROM employerReview_S
 //                    WHERE employerId IS $filter_params";
-//        }
-//        try {
+//            $open_review_s_db = openConnection();
 //            $res = $open_review_s_db->query($query);
 //            $totalPages = ceil($res['total'] / $perPage);
-
+//            echo "<h1>" . $res['total'] . "</h1>";
+//
+//
+//
+//        } catch (PDOException $e) {
+//            die($e->getMessage());
+//        }
+//        $open_review_s_db = null;
+//            echo "<li class='page-item' id='pages'><a class="page-link" href="#">1</a></li>";
 //            $links = "";
 //            for ($i = 1; $i <= $totalPages; $i++) {
 //                $links .= ($i != $page) ? "<a href='reviews.php?employerId=$filter_params" . "page=$i'>Page $i</a>" : "$page";
 //            }
+//            echo "</li>"
 
-            //$res = $open_review_s_db->query($query);
-            if (isset($_GET['employerId'])) {
-                $filter_params = $_GET['employerId'];
-            } else {
-                $filter_params = -1;
-            }
-            $query = "SELECT * 
-                    FROM employerReview_S 
-                    WHERE employerId IS $filter_params
-                    ORDER BY reviewDateTime DESC
-                    LIMIT 0, 10";
-            try{
+//        $res = $open_review_s_db->query($query);
+
+        $filter_params = isset($_GET['employerId']) ? $_GET['employerId']: -1;
+
+        $query = "SELECT * 
+                FROM employerReview_S 
+                WHERE employerId IS $filter_params
+                ORDER BY reviewDateTime DESC
+                LIMIT 0, 10";
+        try {
             $open_review_s_db = openConnection();
             $res = $open_review_s_db->query($query);
-                while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-                    $timeStamp = date_parse($row['reviewDateTime']);
-                    echo "<div class='card text-left'>";
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+                $timeStamp = date_parse($row['reviewDateTime']);
+                echo "<div class='card text-left'>";
 
-                    echo "<div class='card-header'>";
-                    echo ($row['isCurrentJob']) ? "Former Employee" : "Ex-employee";
-                    echo "<p>Overall Rating: " . $row['ratingOverall'] . " / 5</p>";
-                    echo "</div>";
+                echo "<div class='card-header'>";
+                echo ($row['isCurrentJob']) ? "Former Employee" : "Ex-employee";
+                echo " - Overall Rating: " . $row['ratingOverall'] . " / 5";
+                echo "</div>";
 
-                    echo "<div class='card-body'>";
-                    echo "<h3 class='card-title'>" . $row['jobTitle'] . "</h3>";
-                    echo "<br>";
-                    echo "<h5 class='card-title'>Pros:</h5>";
-                    echo "<p class='card-text'>" . $row['pros'] ."</p>";
-                    echo "<h5 class='card-title'>Cons:</h5>";
-                    echo "<p class='card-text'>" . $row['cons'] ."</p>";
-                    echo "<h5 class='card-title'>Advice:</h5>";
-                    echo "<p class='card-text'>" . $row['advice'] ."</p>";
+                echo "<div class='card-body'>";
+                echo "<h3 class='card-title'>" . $row['jobTitle'] . "</h3>";
+                echo "<br>";
+                echo "<h5 class='card-title'>Pros:</h5>";
+                echo "<p class='card-text'>" . $row['pros'] . "</p>";
+                echo "<h5 class='card-title'>Cons:</h5>";
+                echo "<p class='card-text'>" . $row['cons'] . "</p>";
+                echo "<h5 class='card-title'>Advice:</h5>";
+                echo "<p class='card-text'>" . $row['advice'] . "</p>";
 
-                    echo "<h5 class='card-title'>Rating:</h5>";
-                    echo "<p>Career Opportunities: " . $row['ratingCareerOpportunities'] . " / 5</p>";
-                    echo "<p>Compensation and Benefits: " . $row['ratingCompensationAndBenefits'] . " / 5</p>";
-                    echo "<p>Culture and Values: " . $row['ratingCultureAndValues'] . " / 5</p>";
-                    echo "<p>Diversity and Inclusion: " . $row['ratingDiversityAndInclusion'] . " / 5</p>";
-                    echo "<p>Senior Leadership: " . $row['ratingSeniorLeadership'] . " / 5</p>";
-                    echo "<p>Work-Life Balance: " . $row['ratingWorkLifeBalance'] . " / 5</p>";
+                echo "<h5 class='card-title'>Rating:</h5>";
+                echo "<p>Career Opportunities: " . $row['ratingCareerOpportunities'] . " / 5</p>";
+                echo "<p>Compensation and Benefits: " . $row['ratingCompensationAndBenefits'] . " / 5</p>";
+                echo "<p>Culture and Values: " . $row['ratingCultureAndValues'] . " / 5</p>";
+                echo "<p>Diversity and Inclusion: " . $row['ratingDiversityAndInclusion'] . " / 5</p>";
+                echo "<p>Senior Leadership: " . $row['ratingSeniorLeadership'] . " / 5</p>";
+                echo "<p>Work-Life Balance: " . $row['ratingWorkLifeBalance'] . " / 5</p>";
 
-                    echo "<p>Recommend to a friend: ";
-                    echo ($row['ratingRecommendToFriend'] == 'POSITIVE') ? "YES" : "NO";
-                    echo "</p>";
+                echo "<p>Recommend to a friend: ";
+                echo ($row['ratingRecommendToFriend'] == 'POSITIVE') ? "YES" : "NO";
+                echo "</p>";
 
-                    echo "<h5 class='card-title'>Summary:</h5>";
-                    echo "<p class='card-text'>" . $row['summary'] ."</p>";
+                echo "<h5 class='card-title'>Summary:</h5>";
+                echo "<p class='card-text'>" . $row['summary'] . "</p>";
 
-                    echo "<br><br>";
-                    echo "</div>";
+                echo "<br><br>";
+                echo "</div>";
 
-                    echo "<div class='card-footer text-muted'>";
-                    echo "Reviewed on: " . $timeStamp["day"] . "-" . $timeStamp["month"] . "-" . $timeStamp["year"];
-                    echo "</div>";
-                    echo "</div>";
-                    echo "<br>";
-                }
-            } catch (PDOException $e) {
-                die($e->getMessage());
+                echo "<div class='card-footer text-muted'>";
+                echo "Reviewed on: " . $timeStamp["day"] . "-" . $timeStamp["month"] . "-" . $timeStamp["year"];
+                echo "</div>";
+                echo "</div>";
+                echo "<br>";
             }
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        $open_review_s_db = null;
         ?>
     </div>
+
+        <!--        PAGINATION      -->
+<!--    <div class="container">-->
+<!--        <nav>-->
+<!--            <ul class="pagination">-->
+<!--                <li class="page-item" list="pages">-->
+<!--                    <a class="page-link" href="#" aria-label="Previous">-->
+<!--                        <span aria-hidden="true">&laquo;</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="#" aria-label="Next">-->
+<!--                        <span aria-hidden="true">&raquo;</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
 
 
 
@@ -188,4 +212,3 @@ require_once 'database.php';
 
 </body>
 </html>
-
