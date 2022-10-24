@@ -17,6 +17,9 @@
     <meta name="author" content="Sebastian Sosa Salas, Ann Ngo">
     <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
+    <link rel="stylesheet" href="myAssets/css/index.css"/>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
+    
     <script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -34,7 +37,6 @@
         $(function(){
             $('#navbar').load('components/navbar.html');
             $('#footer').load('components/footer.html');
-             $('#chart').load('chart_doc.html');
         });
     </script>
 </head>
@@ -63,11 +65,7 @@
                     <div class="graph-container">
                         <h3 class="graph-title"> TOP 5 COMPANIES</h3>
                         <div class="graph-wrapper">
-                            <!--TODO-->
-                            <p>Replace image below with (perhaps) a top-5 ranking and/or a graph</p>
-                             <!--<img src="img/E16.jpg" width="500" alt="UC E16 lecture theatre."/> -->
                              <!--            CHART            -->
-                            <div id="chart">
                                 <canvas id="myChart"></canvas>
                             </div>
                         </div>
@@ -94,6 +92,52 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
         crossorigin="anonymous"></script>
+<script src="assets/bootstrap/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" ></script>
 
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Google", "Sephora", "GoDaddy", "Xero", "Datacom Systems"],
+            datasets: [{
+                label: "Review",
+                data: [
+                    18796,
+                    5208,
+                    2021,
+                    685,
+                    471,
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
