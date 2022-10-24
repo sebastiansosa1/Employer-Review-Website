@@ -73,11 +73,11 @@ require_once 'database.php';
                 </form>
             </div>
 
-            <div class="d-flex justify-content-left">
+            <div class="d-flex justify-content-center" style="width: 80%">
                 <form action="process-form.php" method="POST" enctype="multipart/form-data">
 
                     <br>
-                    <fieldset>
+                    <fieldset class="fieldset">
                         <legend>Details</legend>
 
                         <label for="employerId" class="form-label">Company to Review:</label>
@@ -106,12 +106,11 @@ require_once 'database.php';
                             <option value="1">YES</option>
                             <option value="0">NO</option>
                         </select>
-
                     </fieldset>
 
 
                     <br>
-                    <fieldset>
+                    <fieldset class="fieldset">
                         <legend>Ratings</legend>
 
                         <label for="ratingCeo" class="form-label">CEO:</label>
@@ -124,8 +123,6 @@ require_once 'database.php';
                         <label for="ratingCompensationAndBenefits" class="form-label">Compensation & Benefits</label>
                         <input type="range" class="form-range" min="0" max="5" id="ratingCompensationAndBenefits"
                                name="ratingCompensationAndBenefits" required/>
-<!--                        <input class="form-control" list="rate" name="ratingCompensationAndBenefits" id="ratingCompensationAndBenefits"-->
-<!--                               placeholder="Rate" required/>-->
 
                         <label for="ratingCareerOpportunities" class="form-label">Career Opportunities</label>
                         <input type="range" class="form-range" min="0" max="5" name="ratingCareerOpportunities"
@@ -139,16 +136,13 @@ require_once 'database.php';
                         <input type="range" class="form-range" min="0" max="5" name="ratingCultureAndValues"
                                id="ratingCultureAndValues" required/>
 
-
                         <label for="ratingDiversityAndInclusion" class="form-label">Diversity & Inclusion</label>
                         <input type="range" class="form-range" min="0" max="5" name="ratingDiversityAndInclusion"
                                id="ratingDiversityAndInclusion" required/>
 
-
                         <label for="ratingSeniorLeadership" class="form-label">Senior Leadership</label>
                         <input type="range" class="form-range" min="0" max="5" name="ratingSeniorLeadership"
                                id="ratingSeniorLeadership" required/>
-
 
                         <label for="ratingWorkLifeBalance" class="form-label">Work-Life Balance</label>
                         <input type="range" class="form-range" min="0" max="5" name="ratingWorkLifeBalance"
@@ -156,7 +150,7 @@ require_once 'database.php';
                     </fieldset>
 
                     <br>
-                    <fieldset>
+                    <fieldset class="fieldset">
                         <legend>Comments:</legend>
                         <label for="ratingRecommendToFriend" class="form-label">Recommend to a friend?</label>
                         <select class="form-control" id="ratingRecommendToFriend" name="ratingRecommendToFriend">
@@ -189,8 +183,10 @@ require_once 'database.php';
                     </fieldset>
 
                     <br/>
+                    <fieldset class="fieldset">
+                        <input class="form-control" type="submit" name="submitReview" id="submitReview"/>
+                    </fieldset>
 
-                    <input class="form-control" type="submit" name="submitReview" id="submitReview"/>
 
                     <br/>
 
@@ -201,156 +197,14 @@ require_once 'database.php';
         </div>
     </section>
 
-    <datalist id="rate">
-        <option value="0">
-        <option value="1">
-        <option value="2">
-        <option value="3">
-        <option value="4">
-        <option value="5">
-    </datalist>
 
-
-    <datalist id='companyOptions'>
-        <?php
-        $open_review_s_db = openConnection();
-        if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
-            $filter_params = $_GET['select_company'];
-            $query = "SELECT employer_id, company_name FROM employer WHERE company_name LIKE '%$filter_params%'";
-            try {
-                $res = $open_review_s_db->query($query);
-                echo "";
-                while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<option value=" . $row['employer_id'] . ">". $row['company_name'] . "</option> ";
-                }
-            } catch (PDOException $e) {
-                die($e->getMessage());
-            }
-        }
-        ?>
-    </datalist>
-
-
-
-
-<?php
-//
-//    if (isset($_POST['submitReview']))
-//    {
-//            &&
-//            isset($_POST['employerId']) &&
-//            isset($_POST['advice']) &&
-//            isset($_POST['cons']) &&
-//            isset($_POST['pros']) &&
-//            isset($_POST['ratingCareerOpportunities']) &&
-//            isset($_POST['ratingCeo']) &&
-//            isset($_POST['ratingCompensationAndBenefits']) &&
-//            isset($_POST['ratingCultureAndValues']) &&
-//            isset($_POST['ratingDiversityAndInclusion']) &&
-//            isset($_POST['ratingOverall']) &&
-//            isset($_POST['ratingRecommendToFriend']) &&
-//            isset($_POST['ratingSeniorLeadership']) &&
-//            isset($_POST['ratingWorkLifeBalance']) &&
-//            isset($_POST['summary']))
-//        $review = new Review();
-//
-//        if(isset($_POST['employerId'])) {
-//            $review->setEmployerId($_POST['employerId']);
-//        }
-//        if(isset($_POST['advice'])) {
-//            $review->setAdvice($_POST['advice']);
-//        }
-//        if(isset($_POST['cons'])) {
-//            $review->setCons($_POST['cons']);
-//        }
-//        if(isset($_POST['pros'])) {
-//            $review->setPros($_POST['pros']);
-//        }
-//        if(isset($_POST['ratingCareerOpportunities'])) {
-//            $review->setRatingCareerOpportunities($_POST['ratingCareerOpportunities']);
-//        }
-//        if(isset($_POST['ratingCeo'])) {
-//            $review->setRatingCeo($_POST['ratingCeo']);
-//        }
-//        if(isset($_POST['ratingCompensationAndBenefits'])) {
-//            $review->setRatingCompensationAndBenefits($_POST['ratingCompensationAndBenefits']);
-//        }
-//        if(isset($_POST['ratingCultureAndValues'])) {
-//            $review->setRatingCultureAndValues($_POST['ratingCultureAndValues']);
-//        }
-//        if(isset($_POST['ratingDiversityAndInclusion'])) {
-//            $review->setRatingDiversityAndInclusion($_POST['ratingDiversityAndInclusion']);
-//        }
-//        if(isset($_POST['ratingOverall'])) {
-//            $review->setRatingOverall($_POST['ratingOverall']);
-//        }
-//        if(isset($_POST['ratingRecommendToFriend'])) {
-//            $review->setRatingRecommendToFriend($_POST['ratingRecommendToFriend']);
-//        }
-//        if(isset($_POST['ratingSeniorLeadership'])) {
-//            $review->setRatingSeniorLeadership($_POST['ratingSeniorLeadership']);
-//        }
-//        if(isset($_POST['ratingWorkLifeBalance'])) {
-//            $review->setRatingWorkLifeBalance($_POST['ratingWorkLifeBalance']);
-//        }
-//        if(isset($_POST['summary'])) {
-//            $review->setSummary($_POST['summary']);
-//        }
-//
-//        $timeStamp = (new DateTime())->format('Y-m-d H:i:s');
-//        $review->setReviewDateTime($timeStamp);
-//
-//        if(isset($_POST['employed_to'])) {
-//            $review->setJobEndingYear(date_parse($_POST['employed_to'])["year"]);
-//        }
-//        if(isset($_POST['employed_to']) && isset($_POST['employed_from'])) {
-//            $review->setLengthOfEmployment(date_parse($_POST['employed_to'])["year"] -
-//                date_parse($_POST['employed_from'])["year"]);
-//        }
-//        if(isset($_POST['employmentStatus'])) {
-//            $review->setEmploymentStatus($_POST['employmentStatus']);
-//        }
-//        if(isset($_POST['advice'])) {
-//            $review->setIsCurrentJob($_POST['advice']);
-//        }
-//        if(isset($_POST['cons'])) {
-//            $review->setJobTitle($_POST['cons']);
-//        }
-//        if(isset($_POST['pros'])) {
-//            $review->setRatingBusinessOutlook($_POST['pros']);
-//        }
-////            $employerId = $_POST['employerId'];
-////            $advice = $_POST['advice'];
-////            $cons = $_POST['cons'];
-////            $pros = $_POST['pros'];
-////            $ratingCareerOpportunities = $_POST['ratingCareerOpportunities'];
-////            $ratingCeo = $_POST['ratingCeo'];
-////            $ratingCompensationAndBenefits = $_POST['ratingCompensationAndBenefits'];
-////            $ratingCultureAndValues = $_POST['ratingCultureAndValues'];
-////            $ratingDiversityAndInclusion = $_POST['ratingDiversityAndInclusion'];
-////            $ratingOverall = $_POST['ratingOverall'];
-////            $ratingRecommendToFriend = $_POST['ratingRecommendToFriend'];
-////            $ratingSeniorLeadership = $_POST['ratingSeniorLeadership'];
-////            $ratingWorkLifeBalance = $_POST['ratingWorkLifeBalance'];
-////            $summary = $_POST['summary'];
-////            $reviewDateTime = (new DateTime())->format('Y-m-d H:i:s');
-////            $jobEndingYear = date_parse($_POST['employed_to'])["year"];
-////            $lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
-////            $employmentStatus = $_POST['employmentStatus'];
-////            $isCurrentJob = $_POST['isCurrentJob'];
-////            $jobTitle = $_POST['jobTitle'];
-////            $ratingBusinessOutlook = $_POST['ratingBusinessOutlook'];
-//
-////            $review = new Review($employerId, $reviewDateTime,$advice, $cons,
-////                $employmentStatus, $isCurrentJob, $jobEndingYear, $jobTitle, $lengthOfEmployment, $pros,
-////                $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo, $ratingCompensationAndBenefits,
-////                $ratingCultureAndValues, $ratingDiversityAndInclusion, $ratingOverall, $ratingRecommendToFriend,
-////                $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary);
-//
-//        insertReview($review);
-//    }
-
+    <?php
+    if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
+        $id = 'companyOptions';
+        buildOptionsList($id, $_GET['select_company']);
+    }
     ?>
+
 </main>
 
 <div id="footer"></div>

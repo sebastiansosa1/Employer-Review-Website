@@ -42,6 +42,7 @@ $summary = $pdo->quote($summary);
 $reviewDateTime = $pdo->quote($reviewDateTime);
 $employmentStatus = $pdo->quote($employmentStatus);
 
+//DEBUG:
 //var_dump($employerId,
 //    $jobTitle,
 //    $employedFromYear, //
@@ -75,9 +76,11 @@ $query = "INSERT INTO employerReview_S (employerId, reviewDateTime, advice, cons
                                 $ratingCompensationAndBenefits, $ratingCultureAndValues, $ratingDiversityAndInclusion, 
                                 $ratingOverall, $ratingRecommendToFriend, 
                                   $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary, $employmentStatus)";
+//DEBUG:
 //print_r("\nQUERY GENERATED:");
 //var_dump($query);
 
+// WORKS FROM HERE
 try {
     $result = $pdo->query($query);
     print_r("\nREVIEW SUCCESSFULLY SUBMITTED.");
@@ -88,6 +91,9 @@ try {
     fatalError($e->getMessage());
 }
 $pdo = null;
+//TO HERE
+
+
 //print_r($_POST);
 
 //    "(:employerId, :reviewDateTime, :advice, :cons, :isCurrentJob, :jobEndingYear,
