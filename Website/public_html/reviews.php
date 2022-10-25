@@ -117,6 +117,7 @@ require_once 'database.php';
             $res = $open_review_s_db->query($query);
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                 $timeStamp = date_parse($row['reviewDateTime']);
+//                var_dump($row);
                 echo "<div class='card text-left'>";
 
                 echo "<div class='card-header'>";
@@ -143,7 +144,7 @@ require_once 'database.php';
                 echo "<p>Work-Life Balance: " . $row['ratingWorkLifeBalance'] . " / 5</p>";
 
                 echo "<p>Recommend to a friend: ";
-                echo ($row['ratingRecommendToFriend'] == 'POSITIVE') ? "YES" : "NO";
+                echo ($row['ratingRecommendToFriend'] == "'POSITIVE'") ? "YES" : "NO";
                 echo "</p>";
 
                 echo "<h5 class='card-title'>Summary:</h5>";

@@ -22,7 +22,7 @@ $advice = $_POST['advice'];
 $pros = $_POST['pros'];
 $cons = $_POST['cons'];
 $summary = $_POST['summary'];
-$reviewDateTime = (new DateTime())->format('Y-m-d H:i:s');
+$reviewDateTime = (new DateTime("now"))->format('Y-m-d H:i:s');
 $jobEndingYear = date_parse($_POST['employed_to'])["year"];
 $lengthOfEmployment = date_parse($_POST['employed_to'])["year"] - date_parse($_POST['employed_from'])["year"];
 $employmentStatus = $_POST['employmentStatus'];
@@ -70,64 +70,69 @@ $employmentStatus = $pdo->quote($employmentStatus);
 $query = "INSERT INTO employerReview_S (employerId, reviewDateTime, advice, cons, isCurrentJob, jobEndingYear, jobTitle, lengthOfEmployment, pros, 
                                   ratingBusinessOutlook, ratingCareerOpportunities, ratingCeo, ratingCompensationAndBenefits, 
                                   ratingCultureAndValues, ratingDiversityAndInclusion, ratingOverall, ratingRecommendToFriend, 
-                                  ratingSeniorLeadership, ratingWorkLifeBalance, summary, employmentStatus) VALUES (
-                                 $employerId, $reviewDateTime, $advice, $cons, $isCurrentJob, $jobEndingYear, $jobTitle, 
-                                $lengthOfEmployment, $pros, $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo, 
-                                $ratingCompensationAndBenefits, $ratingCultureAndValues, $ratingDiversityAndInclusion, 
-                                $ratingOverall, $ratingRecommendToFriend, 
-                                  $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary, $employmentStatus)";
+                                  ratingSeniorLeadership, ratingWorkLifeBalance, summary, employmentStatus) VALUES" .
+        "(:employerId, :reviewDateTime, :advice, :cons, :isCurrentJob, :jobEndingYear,
+        :jobTitle, :lengthOfEmployment, :pros, :ratingBusinessOutlook, :ratingCareerOpportunities,
+        :ratingCeo, :ratingCompensationAndBenefits, :ratingCultureAndValues,
+        :ratingDiversityAndInclusion, :ratingOverall, :ratingRecommendToFriend, :ratingSeniorLeadership,
+        :ratingWorkLifeBalance, :summary, :employmentStatus)";
+
+//                                                                                                                "(
+//                                 $employerId, $reviewDateTime, $advice, $cons, $isCurrentJob, $jobEndingYear, $jobTitle,
+//                                $lengthOfEmployment, $pros, $ratingBusinessOutlook, $ratingCareerOpportunities, $ratingCeo,
+//                                $ratingCompensationAndBenefits, $ratingCultureAndValues, $ratingDiversityAndInclusion,
+//                                $ratingOverall, $ratingRecommendToFriend,
+//                                  $ratingSeniorLeadership, $ratingWorkLifeBalance, $summary, $employmentStatus)";
 //DEBUG:
 //print_r("\nQUERY GENERATED:");
 //var_dump($query);
 
-// WORKS FROM HERE
-try {
-    $result = $pdo->query($query);
-    print_r("\nREVIEW SUCCESSFULLY SUBMITTED.");
-    print_r("\n<a href='index.html'>Go Back to Home</a>");
-} catch (PDOException $e) {
-//    print_r("\nERROR CATCH:");
-    var_dump($e);
-    fatalError($e->getMessage());
-}
-$pdo = null;
-//TO HERE
+//// WORKS FROM HERE
+//try {
+//    $result = $pdo->query($query);
+//    print_r("\nREVIEW SUCCESSFULLY SUBMITTED.");
+//    print_r("\n<a href='index.html'>Go Back to Home</a>");
+//} catch (PDOException $e) {
+////    print_r("\nERROR CATCH:");
+//    var_dump($e);
+//    fatalError($e->getMessage());
+//}
+//$pdo = null;
+////TO HERE
 
 
 //print_r($_POST);
+//
+try {
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':employerId', $employerId, PDO::PARAM_INT);
+    $stmt->bindParam(':reviewDateTime', $reviewDateTime, PDO::PARAM_STR);
+    $stmt->bindParam(':advice', $advice, PDO::PARAM_STR);
+    $stmt->bindParam(':cons', $cons, PDO::PARAM_STR);
+    $stmt->bindParam(':isCurrentJob', $isCurrentJob, PDO::PARAM_INT);
+    $stmt->bindParam(':jobEndingYear', $jobEndingYear, PDO::PARAM_INT);
+    $stmt->bindParam(':jobTitle', $jobTitle, PDO::PARAM_STR);
+    $stmt->bindParam(':lengthOfEmployment', $lengthOfEmployment, PDO::PARAM_INT);
+    $stmt->bindParam(':pros', $pros, PDO::PARAM_STR);
+    $stmt->bindParam(':ratingBusinessOutlook', $ratingBusinessOutlook, PDO::PARAM_STR);
+    $stmt->bindParam(':ratingCareerOpportunities', $ratingCareerOpportunities, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingCeo', $ratingCeo, PDO::PARAM_STR);
+    $stmt->bindParam(':ratingCompensationAndBenefits', $ratingCompensationAndBenefits, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingCultureAndValues', $ratingCultureAndValues, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingDiversityAndInclusion', $ratingDiversityAndInclusion, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingOverall', $ratingOverall, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingRecommendToFriend', $ratingRecommendToFriend, PDO::PARAM_STR);
+    $stmt->bindParam(':ratingSeniorLeadership', $ratingSeniorLeadership, PDO::PARAM_INT);
+    $stmt->bindParam(':ratingWorkLifeBalance', $ratingWorkLifeBalance, PDO::PARAM_INT);
+    $stmt->bindParam(':summary', $summary, PDO::PARAM_STR);
+    $stmt->bindParam(':employmentStatus', $employmentStatus, PDO::PARAM_STR);
+    $stmt->execute();
+//    var_dump($stmt);
+    print_r("\nREVIEW SUCCESSFULLY SUBMITTED.");
+    print_r("\n<a href='index.html'>Go Back to Home</a>");
+} catch (PDOException $e) {
+    print_r("\nERROR CATCH: ");
+    var_dump($e->getMessage());
+}
 
-//    "(:employerId, :reviewDateTime, :advice, :cons, :isCurrentJob, :jobEndingYear,
-//                            :jobTitle, :lengthOfEmployment, :pros, :ratingBusinessOutlook, :ratingCareerOpportunities,
-//                            :ratingCeo, :ratingCompensationAndBenefits, :ratingCultureAndValues,
-//                            :ratingDiversityAndInclusion, :ratingOverall, :ratingRecommendToFriend, :ratingSeniorLeadership,
-//                            :ratingWorkLifeBalance, :summary, :employmentStatus)";
-//
-//try {
-//    $stmt = $pdo->prepare($query);
-//    $stmt->bindParam(':employerId', $employerId, PDO::PARAM_INT);
-//    $stmt->bindParam(':reviewDateTime', $reviewDateTime);
-//    $stmt->bindParam(':advice', $advice);
-//    $stmt->bindParam(':cons', $cons);
-//    $stmt->bindParam(':isCurrentJob', $isCurrentJob, PDO::PARAM_INT);
-//    $stmt->bindParam(':jobEndingYear', $jobEndingYear, PDO::PARAM_INT);
-//    $stmt->bindParam(':jobTitle', $jobTitle);
-//    $stmt->bindParam(':lengthOfEmployment', $lengthOfEmployment, PDO::PARAM_INT);
-//    $stmt->bindParam(':pros', $pros);
-//    $stmt->bindParam(':ratingBusinessOutlook', $ratingBusinessOutlook);
-//    $stmt->bindParam(':ratingCareerOpportunities', $ratingCareerOpportunities, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingCeo', $ratingCeo);
-//    $stmt->bindParam(':ratingCompensationAndBenefits', $ratingCompensationAndBenefits, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingCultureAndValues', $ratingCultureAndValues, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingDiversityAndInclusion', $ratingDiversityAndInclusion, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingOverall', $ratingOverall, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingRecommendToFriend', $ratingRecommendToFriend);
-//    $stmt->bindParam(':ratingSeniorLeadership', $ratingSeniorLeadership, PDO::PARAM_INT);
-//    $stmt->bindParam(':ratingWorkLifeBalance', $ratingWorkLifeBalance, PDO::PARAM_INT);
-//    $stmt->bindParam(':summary', $summary);
-//    $stmt->bindParam(':employmentStatus', $employmentStatus);
-//    $stmt->execute();
-//} catch (PDOException $e) {
-//    fatalError($e->getMessage());
-//}
-//
-//$pdo = null;
+$pdo = null;
