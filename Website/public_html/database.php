@@ -18,18 +18,36 @@ function openConnection()
     return $open_review_s_db;
 }
 
-function buildOptionsList($id, $param)
+//function buildOptionsList($id, $param)
+//{
+//    $open_review_s_db = openConnection();
+//    $query = "SELECT employer_id, company_name FROM employer WHERE company_name LIKE '%$param%'";
+//    try {
+//        $res = $open_review_s_db->query($query);
+//        echo "<datalist id='$id'>";
+//        while($row = $res->fetch(PDO::FETCH_ASSOC)) {
+//            $val = $row['employer_id'];
+//            $tag = $row['company_name'];
+//            echo "<option value=$val>$tag</option>";
+//        }
+//        echo "</datalist>";
+//
+//    } catch (PDOException $e) {
+//        die($e->getMessage());
+//    }
+//}
+
+function buildOptionsList($param)
 {
     $open_review_s_db = openConnection();
     $query = "SELECT employer_id, company_name FROM employer WHERE company_name LIKE '%$param%'";
     try {
         $res = $open_review_s_db->query($query);
-        echo "<datalist id='$id'>";
         while($row = $res->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value=" . $row['employer_id'] . ">". $row['company_name'] . "</option> ";
+            $val = $row['employer_id'];
+            $tag = $row['company_name'];
+            echo "<option value=$val>$tag</option>";
         }
-        echo "</datalist>";
-
     } catch (PDOException $e) {
         die($e->getMessage());
     }

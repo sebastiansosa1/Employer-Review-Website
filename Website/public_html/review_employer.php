@@ -81,8 +81,15 @@ require_once 'database.php';
                         <legend>Details</legend>
 
                         <label for="employerId" class="form-label">Company to Review:</label>
-                        <input class="form-control" list="companyOptions" id="employerId" name="employerId"
-                               placeholder="Select or type to search...">
+<!--                        <input class="form-control" list="companyOptions" id="employerId" name="employerId"-->
+<!--                               placeholder="After searching the name, select company here from the list:">-->
+                        <select id="employerId" class="form-control" name="employerId">
+                            <?php
+                            if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
+                                buildOptionsList($_GET['select_company']);
+                            }
+                            ?>
+                        </select>
 
                         <label for="jobTitle" class="form-label">Job Title: </label>
                         <input class="form-control" type="text" name="jobTitle" placeholder="Job Title" id="jobTitle" />
@@ -198,12 +205,12 @@ require_once 'database.php';
     </section>
 
 
-    <?php
-    if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
-        $id = 'companyOptions';
-        buildOptionsList($id, $_GET['select_company']);
-    }
-    ?>
+<!--    --><?php
+//    if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
+//        $id = 'companyOptions';
+//        buildOptionsList($id, $_GET['select_company']);
+//    }
+//    ?>
 
 </main>
 
