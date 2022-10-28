@@ -191,7 +191,7 @@ require_once 'database.php';
 
                     <br/>
                     <fieldset class="fieldset">
-                        <input class="form-control" type="submit" name="submitReview" id="submitReview"/>
+                        <input class="form-control btn btn-primary" type="submit" name="submitReview" id="submitReview"/>
                     </fieldset>
 
 
@@ -203,15 +203,6 @@ require_once 'database.php';
 
         </div>
     </section>
-
-
-<!--    --><?php
-//    if(isset($_GET['select_company']) && strlen($_GET['select_company']) > 2) {
-//        $id = 'companyOptions';
-//        buildOptionsList($id, $_GET['select_company']);
-//    }
-//    ?>
-
 </main>
 
 <div id="footer"></div>

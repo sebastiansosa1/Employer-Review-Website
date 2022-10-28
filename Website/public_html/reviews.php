@@ -44,7 +44,7 @@ require_once 'database.php';
 <div id="navbar"></div>
 
 <main style="background-color: rgb(230, 243, 218)">
-<!--    BUILD TITLE AND ICON-->
+    <!--    BUILD TITLE AND ICON    -->
     <?php
     $open_review_s_db = openConnection();
 
@@ -69,55 +69,45 @@ require_once 'database.php';
     } catch (PDOException $e) {
         die($e->getMessage());
     }
+    $open_review_s_db = null;
     ?>
     <br>
 
-            <!--    REVIEW CARDS SORTED BY TIMESTAMP    -->
+    <!--    REVIEW CARDS SORTED BY TIMESTAMP    -->
     <div class="container">
         <?php
 
-//        $perPage = 5;
-//        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-//        $startAt = $perPage * ($page - 1);
-//        $filter_params = isset($_GET['employerId'])? $_GET['employerId'] : -1;
-//
-//        try {
-//            $query = "SELECT COUNT(employerId) AS total
-//                    FROM employerReview_S
-//                    WHERE employerId IS $filter_params";
-//            $open_review_s_db = openConnection();
-//            $res = $open_review_s_db->query($query);
-//            $totalPages = ceil($res['total'] / $perPage);
-//            echo "<h1>" . $res['total'] . "</h1>";
-//
-//
-//
-//        } catch (PDOException $e) {
-//            die($e->getMessage());
-//        }
-//        $open_review_s_db = null;
-//            echo "<li class='page-item' id='pages'><a class="page-link" href="#">1</a></li>";
-//            $links = "";
-//            for ($i = 1; $i <= $totalPages; $i++) {
-//                $links .= ($i != $page) ? "<a href='reviews.php?employerId=$filter_params" . "page=$i'>Page $i</a>" : "$page";
-//            }
-//            echo "</li>"
+    //        GET NUMBER OF PAGES
+        $perPage = 5;
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        $page = $page <= 0 ? 1 : $page;
+        $startAt = $perPage * ($page - 1);
+        $filter_params = isset($_GET['employerId']) ? intval($_GET['employerId']) : -1;
+        $query = "SELECT COUNT(employerId) AS 'count'
+                    FROM employerReview_S
+                    WHERE employerId IS $filter_params";
+        try {
+            $open_review_s_db = openConnection();
+            $res = $open_review_s_db->query($query);
+            $count = intval($res->fetch(PDO::FETCH_ASSOC)['count']);
+            $totalPages = ceil($count / $perPage);
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+        $open_review_s_db = null;
 
-//        $res = $open_review_s_db->query($query);
 
-        $filter_params = isset($_GET['employerId']) ? $_GET['employerId']: -1;
-
+        //BUILD EACH REVIEW CARD
         $query = "SELECT * 
                 FROM employerReview_S 
                 WHERE employerId IS $filter_params
                 ORDER BY reviewDateTime DESC
-                LIMIT 0, 10";
+                LIMIT $startAt, $perPage";
         try {
             $open_review_s_db = openConnection();
             $res = $open_review_s_db->query($query);
             while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
                 $timeStamp = date_parse($row['reviewDateTime']);
-//                var_dump($row);
                 echo "<div class='card text-left'>";
 
                 echo "<div class='card-header'>";
@@ -167,25 +157,29 @@ require_once 'database.php';
     </div>
 
         <!--        PAGINATION      -->
-<!--    <div class="container">-->
-<!--        <nav>-->
-<!--            <ul class="pagination">-->
-<!--                <li class="page-item" list="pages">-->
-<!--                    <a class="page-link" href="#" aria-label="Previous">-->
-<!--                        <span aria-hidden="true">&laquo;</span>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                <li class="page-item">-->
-<!--                    <a class="page-link" href="#" aria-label="Next">-->
-<!--                        <span aria-hidden="true">&raquo;</span>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </nav>-->
-<!--    </div>-->
+    <div class="container well">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" list="pages">
+                    <a class="page-link" href="reviews.php?employerId=<?= $filter_params; ?>&page=<?= ($page-1); ?>"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <?php for($i=1; $i<=($totalPages <= 10 ? $totalPages : 10); $i++) : ?>
+                    <li class="page-item"><a class="page-link"
+                                             href="reviews.php?employerId=<?= $filter_params; ?>&page=<?= $i; ?>"><?= $i; ?></a></li>
+                <?php endfor; ?>
+                <li class="page-item">
+                    <a class="page-link"
+                       href="reviews.php?employerId=<?= $filter_params; ?>&page=<?= ($page>=$totalPages ? $totalPages : ($page+1)); ?>"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 
 

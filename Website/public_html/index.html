@@ -61,7 +61,6 @@
                         <h3 class="graph-title"> TOP 10 RANKING - BEST COMPANIES</h3>
                         <div id="chart-container">
                             <canvas id="chartCanvas"></canvas>
-                            <p>works</p>
                         </div>
                         </div>
                     </div>
@@ -69,7 +68,10 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
     </section>
+
 </main>
 
 <!--            FOOTER           -->
@@ -95,9 +97,9 @@
         success: function(data) {
             console.log(data);
 
-            for (let i=0; i < 10; i++) { //Make sure only 10 companies
-                names.push(data[i].company_name);
-                ratings.push(data[i].overall_rating);
+            for (const tuple of data) { //Limit of 10 set by the query
+                names.push(tuple.company_name);
+                ratings.push(tuple.overall_rating);
             }
             console.log("names: ", names);
             console.log("ratings", ratings);
